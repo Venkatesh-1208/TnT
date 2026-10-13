@@ -1,5 +1,113 @@
-Hi Team, I tried upgrading the AKS module from v5.1.1 to v6.8.2 and noticed multiple resource deletions in the Terraform plan. I reverted to v5.1.1 and commented out the backup configuration in both the config and `main.tf` files. The latest plan now shows **4 additions, 23 changes, and 0 destructions**.
 
-Could you please review and suggest how we should proceed safely, especially regarding the backup configuration and AKS upgrade?
+Peering Issue Investigation Summary
+We are troubleshooting unexpected behavior with the DataHub and DataSpoke VNet peerings between the workload VNets, the central Hub VNet, and the central Bastion VNet.
+The expected connectivity model is:
+Hub <-> Spoke
+Bastion <-> Spoke
+Scope
+The peering issue affects all deployed DataHub and DataSpoke environments except the following two environments, which are currently working:
+- Internal DataSpoke INT-DEV
+- Internal DataSpoke INT-ACC
+ACC, DEV, and PRD DataHub were selected as controlled test environments for troubleshooting.
+Only these three environments were actively recreated and tested to:
+1. Avoid changing every affected environment during the investigation.
+2. Compare different peering recovery methods.
+3. Exclude the possibility that the behavior was caused by multiple environments being deployed in parallel.
+Tests performed
+1. DataHub ACC and DEV
+The DataHub ACC and DEV VNets were destroyed and recreated using the same deployment procedure.
+This was intended to provide two comparable environments using the same recovery approach.
+2. DataHub PRD
+For DataHub PRD, the disconnected spoke-side peering was deleted manually before redeployment.
+PRD was intentionally handled differently to provide a separate test case and compare manual peering deletion against complete VNet recreation.
+3. Pipeline deployment
+The connectivity pipeline was rerun for the three selected DataHub environments.
+The peerings were created and became visible in Azure.
+For the tested environments, the corresponding central Hub peerings initially appeared as:
+- Connected
+- Fully Synchronized
+Observed behavior
+Although the peerings were initially created and connected, the ACC, DEV, and PRD peerings later changed to:
+Disconnected
+The corresponding peerings were subsequently also removed from the central Hub side.
+This means the observed lifecycle was:
+Peering created
+-> Connected
+-> Fully Synchronized
+-> Later Disconnected
+-> Eventually removed from the Hub side
+The behavior was not limited to an environment deployed as part of a large parallel deployment.
+ACC, DEV, and PRD were deliberately tested separately from the remaining affected environments to reduce parallel activity as a possible explanation.
+Main error observed
+RemotePeeringIsDisconnected
+Azure reports that the remote peering is in a Disconnected state and must be updated or recreated.
+Azure also reports that peerings become disconnected when the remote VNet or remote peering is deleted and recreated.
+Spoke configuration review
+The spoke definitions use the expected central connectivity values:
+- Hub VNet:
+  vnet-cf-hub-prd-euw-yjjlh-001
+- Bastion VNet:
+  vnet-cf-pfm-prd-euw-yjjlh-001
+- DNS server:
+  10.90.1.4
+- Default route next hop:
+  10.90.0.4
+The peered_with_hub and peered_with_bastion configuration matches the established Hub-Spoke implementation pattern.
+The additional route tables and subnet delegations present in some other applications are workload-specific and do not explain why an initially connected peering later becomes disconnected or is removed.
+Current state
+Working environments:
+- Internal DataSpoke INT-DEV
+- Internal DataSpoke INT-ACC
+Affected environments:
+- All other deployed DataHub and DataSpoke environments
+Controlled test environments:
+- DataHub ACC
+- DataHub DEV
+- DataHub PRD
+The tested peerings were successfully created and initially synchronized, but later became disconnected.
+The corresponding peerings were also later removed from the central Hub side.
+Current investigation question
+What process is modifying or deleting the peering resources after they have already been created and have reached Connected and Fully Synchronized status?
+Requested support
+Please compare the Terraform state, pipeline history, and deployed peering resources for:
+Working control environments:
+- Internal DataSpoke INT-DEV
+- Internal DataSpoke INT-ACC
+Affected test environments:
+- DataHub ACC
+- DataHub DEV
+- DataHub PRD
+The objective is to identify which Terraform state, pipeline, module, scheduled process, or reconciliation action changes or removes the peerings after they initially become Connected and Fully Synchronized.
+!!! ATTENTION: Only in case a CTD/CSD file exists!!!
+Since Capgemini has no access to Confluence you MUST UPLOAD the CTD/CSD file here!
+It is not enough to provide the link to the Confluence page where the CTD/CSD file is stored!
+van Vugt, Roos: In this activity Capgemini will create a Risk and Impact Analysis (RIA) and the Service Manager will fill in the classification matrix. 
+Action for the Service Manager
+Fill in the Classification Matrix based on the RIA document you receive from Capgemini.
+Upload the classification matrix and close this activity.
+Once the RIA is done the change and activity will be updated and Capgemini will wait for approval to continue with the change.  
+This approval is NOT given in THIS activity but in the NEXT. TenneT needs to close (Resolve) this activity to continue. This is designed this way as it could be that TenneT needs to perform extra activities in this phase to complete the impact analysis of the change.  
+TO DO: Set the status in the activity ,,MCP Impact analysis’' to ,resolved’.
+Fill in the Classification Matrix.xlsx and add as attachment this to this activity
+------------
+Remarks:
+van Vugt, Roos: Input Impact Analyses
+Requirements (category/subcategory and answered questions) are clear? Otherwise contact the caller.
+Output Impact Analyses
+Desired RFC is impacted and contains clear information on solution, impact, planning and costs
+The lead service provider provides the impact analysis from all involved stakeholders
+Copy the questions and answer them in the text field of this action
+⒈What is the proposed solution
+⒜What are the possible alternatives
+⒝Are there estimated costs for implementation and run. Store the financial information in IFS or SharePoint
+⒞What are the risks during implementation and after the implementation
+⒟Is there a Rollback scenario (Design @impact analyse - definitive @built &test)
+⒠Will there be a Service interruption during the implementation
+⒉Fill in the Classification Matrix.xlsx and add this to the change 
+⒊Provide your planning - Tab Extra information, fill in
+⒜Planned UAT
+⒝Estimated Number of Hours
+⒞Tick the checkbox if the change is security of privacy related
+⒟Check if the planned implementation date is correct and change it when not. Always align with the Service manager or product owner
+⒋Does this change has impact on Confidentiality, Integrity and Availability (e.g. BIA, IPRA, GDPR, SLA) then then align with the Solution Architect
 
-Thanks.
