@@ -1,113 +1,461 @@
+# Terraform Changes — ArgoCD Application Gateway Listener
+**All changes needed on the other machine — with exact file paths and line numbers**
 
-Peering Issue Investigation Summary
-We are troubleshooting unexpected behavior with the DataHub and DataSpoke VNet peerings between the workload VNets, the central Hub VNet, and the central Bastion VNet.
-The expected connectivity model is:
-Hub <-> Spoke
-Bastion <-> Spoke
-Scope
-The peering issue affects all deployed DataHub and DataSpoke environments except the following two environments, which are currently working:
-- Internal DataSpoke INT-DEV
-- Internal DataSpoke INT-ACC
-ACC, DEV, and PRD DataHub were selected as controlled test environments for troubleshooting.
-Only these three environments were actively recreated and tested to:
-1. Avoid changing every affected environment during the investigation.
-2. Compare different peering recovery methods.
-3. Exclude the possibility that the behavior was caused by multiple environments being deployed in parallel.
-Tests performed
-1. DataHub ACC and DEV
-The DataHub ACC and DEV VNets were destroyed and recreated using the same deployment procedure.
-This was intended to provide two comparable environments using the same recovery approach.
-2. DataHub PRD
-For DataHub PRD, the disconnected spoke-side peering was deleted manually before redeployment.
-PRD was intentionally handled differently to provide a separate test case and compare manual peering deletion against complete VNet recreation.
-3. Pipeline deployment
-The connectivity pipeline was rerun for the three selected DataHub environments.
-The peerings were created and became visible in Azure.
-For the tested environments, the corresponding central Hub peerings initially appeared as:
-- Connected
-- Fully Synchronized
-Observed behavior
-Although the peerings were initially created and connected, the ACC, DEV, and PRD peerings later changed to:
-Disconnected
-The corresponding peerings were subsequently also removed from the central Hub side.
-This means the observed lifecycle was:
-Peering created
--> Connected
--> Fully Synchronized
--> Later Disconnected
--> Eventually removed from the Hub side
-The behavior was not limited to an environment deployed as part of a large parallel deployment.
-ACC, DEV, and PRD were deliberately tested separately from the remaining affected environments to reduce parallel activity as a possible explanation.
-Main error observed
-RemotePeeringIsDisconnected
-Azure reports that the remote peering is in a Disconnected state and must be updated or recreated.
-Azure also reports that peerings become disconnected when the remote VNet or remote peering is deleted and recreated.
-Spoke configuration review
-The spoke definitions use the expected central connectivity values:
-- Hub VNet:
-  vnet-cf-hub-prd-euw-yjjlh-001
-- Bastion VNet:
-  vnet-cf-pfm-prd-euw-yjjlh-001
-- DNS server:
-  10.90.1.4
-- Default route next hop:
-  10.90.0.4
-The peered_with_hub and peered_with_bastion configuration matches the established Hub-Spoke implementation pattern.
-The additional route tables and subnet delegations present in some other applications are workload-specific and do not explain why an initially connected peering later becomes disconnected or is removed.
-Current state
-Working environments:
-- Internal DataSpoke INT-DEV
-- Internal DataSpoke INT-ACC
-Affected environments:
-- All other deployed DataHub and DataSpoke environments
-Controlled test environments:
-- DataHub ACC
-- DataHub DEV
-- DataHub PRD
-The tested peerings were successfully created and initially synchronized, but later became disconnected.
-The corresponding peerings were also later removed from the central Hub side.
-Current investigation question
-What process is modifying or deleting the peering resources after they have already been created and have reached Connected and Fully Synchronized status?
-Requested support
-Please compare the Terraform state, pipeline history, and deployed peering resources for:
-Working control environments:
-- Internal DataSpoke INT-DEV
-- Internal DataSpoke INT-ACC
-Affected test environments:
-- DataHub ACC
-- DataHub DEV
-- DataHub PRD
-The objective is to identify which Terraform state, pipeline, module, scheduled process, or reconciliation action changes or removes the peerings after they initially become Connected and Fully Synchronized.
-!!! ATTENTION: Only in case a CTD/CSD file exists!!!
-Since Capgemini has no access to Confluence you MUST UPLOAD the CTD/CSD file here!
-It is not enough to provide the link to the Confluence page where the CTD/CSD file is stored!
-van Vugt, Roos: In this activity Capgemini will create a Risk and Impact Analysis (RIA) and the Service Manager will fill in the classification matrix. 
-Action for the Service Manager
-Fill in the Classification Matrix based on the RIA document you receive from Capgemini.
-Upload the classification matrix and close this activity.
-Once the RIA is done the change and activity will be updated and Capgemini will wait for approval to continue with the change.  
-This approval is NOT given in THIS activity but in the NEXT. TenneT needs to close (Resolve) this activity to continue. This is designed this way as it could be that TenneT needs to perform extra activities in this phase to complete the impact analysis of the change.  
-TO DO: Set the status in the activity ,,MCP Impact analysis’' to ,resolved’.
-Fill in the Classification Matrix.xlsx and add as attachment this to this activity
-------------
-Remarks:
-van Vugt, Roos: Input Impact Analyses
-Requirements (category/subcategory and answered questions) are clear? Otherwise contact the caller.
-Output Impact Analyses
-Desired RFC is impacted and contains clear information on solution, impact, planning and costs
-The lead service provider provides the impact analysis from all involved stakeholders
-Copy the questions and answer them in the text field of this action
-⒈What is the proposed solution
-⒜What are the possible alternatives
-⒝Are there estimated costs for implementation and run. Store the financial information in IFS or SharePoint
-⒞What are the risks during implementation and after the implementation
-⒟Is there a Rollback scenario (Design @impact analyse - definitive @built &test)
-⒠Will there be a Service interruption during the implementation
-⒉Fill in the Classification Matrix.xlsx and add this to the change 
-⒊Provide your planning - Tab Extra information, fill in
-⒜Planned UAT
-⒝Estimated Number of Hours
-⒞Tick the checkbox if the change is security of privacy related
-⒟Check if the planned implementation date is correct and change it when not. Always align with the Service manager or product owner
-⒋Does this change has impact on Confidentiality, Integrity and Availability (e.g. BIA, IPRA, GDPR, SLA) then then align with the Solution Architect
+---
 
+## OVERVIEW — 5 files to change
+
+| # | File Path | Type of Change |
+|---|-----------|----------------|
+| 1 | `terraform/ssl_certs.tf` | **Replace entire file** |
+| 2 | `terraform/main.tf` | Edit lines 12–21 |
+| 3 | `terraform/modules/aks/appgw.tf` | Edit lines 1–10 + lines 27–30 + lines 38–41 + lines 232–247 + add new blocks after line 318 |
+| 4 | `terraform/modules/aks/variables_appgw.tf` | Append at end of file (after line 195) |
+| 5 | `terraform/modules/aks/key_vault.tf` | Edit lines 66–69 |
+
+> [!IMPORTANT]
+> After making all changes, if Terraform state has the old resource tracked, run:
+> `terraform state rm 'azurerm_key_vault_certificate.argocd_ssl_certificate[0]'`
+> Then run `terraform plan` → `terraform apply`
+
+---
+
+## FILE 1 — `terraform/ssl_certs.tf`
+
+**Action: DELETE everything in this file and replace with the content below.**
+
+```hcl
+# The ArgoCD certificate is already present in Key Vault (uploaded manually or via pipeline).
+# We read it here via a data source — no PFX file or password secret required on disk.
+#
+# IMPORTANT: If this is the FIRST TIME and the cert does NOT yet exist in KV,
+#            upload it manually first:
+#   az keyvault certificate import \
+#     --vault-name kvcfsettlacceuwaks001 \
+#     --name argocd-settlement-acc-tennet-cloud \
+#     --file ssl_certs/argocd.settlement.acc.tennet.cloud.pfx \
+#     --password "<pfx-password>"
+#
+data "azurerm_key_vault_certificate" "argocd_ssl_certificate" {
+  count = local.argocd_domain_is_present ? 1 : 0
+
+  name         = replace(local.aks.argocd_domain, ".", "-")
+  key_vault_id = data.azurerm_key_vault.aks_kv.id
+}
+```
+
+---
+
+## FILE 2 — `terraform/main.tf`
+
+### Change A — Lines 12 to 21 (the `appgw_ssl_certificates` local block)
+
+**FIND this (lines 12–21):**
+```hcl
+  # SSL certificates for Application Gateway (Argocd only)
+  # Referencing .secret_id directly (instead of a string interpolation) lets Terraform
+  # automatically order: KV cert upload → AppGW ssl_certificate block.
+  appgw_ssl_certificates = local.argocd_domain_is_present ? [
+    {
+      name                = replace(try(local.aks.argocd_domain, ""), ".", "-")
+      key_vault_secret_id = azurerm_key_vault_certificate.argocd_ssl_certificate[0].secret_id
+    }
+  ] : []
+}
+```
+
+**REPLACE WITH:**
+```hcl
+  # SSL certificates for Application Gateway (ArgoCD only)
+  # Uses versionless_secret_id so AppGW auto-rotates without a Terraform re-apply.
+  # References the data source (cert already exists in KV — no PFX import needed).
+  appgw_ssl_certificates = local.argocd_domain_is_present ? [
+    {
+      name                = replace(try(local.aks.argocd_domain, ""), ".", "-")
+      key_vault_secret_id = data.azurerm_key_vault_certificate.argocd_ssl_certificate[0].versionless_secret_id
+    }
+  ] : []
+}
+```
+
+> Key change on line 18: `azurerm_key_vault_certificate` → `data.azurerm_key_vault_certificate`
+> and `.secret_id` → `.versionless_secret_id`
+
+### Change B — Lines 81–82 (inside the `module "aks"` block)
+
+**CHECK that these two lines exist** (they may already be there if copy was done from this reference repo):
+
+```hcl
+  appgw_ssl_certificates = try(local.appgw_ssl_certificates, [])
+  argocd_domain          = try(local.aks.argocd_domain, null)
+```
+
+**If `argocd_domain` line is MISSING, add it right after `appgw_ssl_certificates`:**
+```hcl
+  appgw_ssl_certificates = try(local.appgw_ssl_certificates, [])
+  argocd_domain          = try(local.aks.argocd_domain, null)   # ← ADD THIS LINE IF MISSING
+```
+
+---
+
+## FILE 3 — `terraform/modules/aks/appgw.tf`
+
+### Change A — Lines 1–10 (the `locals` block at top of file)
+
+**FIND this (lines 1–4, current):**
+```hcl
+locals {
+  appgw_name                  = "appgw-${var.fullname}-001"
+  appgw_name_fqdn             = "appgw-${var.fullname}-001.${var.appgw_dns_zone_name}"
+  appgw_managed_identity_name = "id-${local.appgw_name}"
+}
+```
+
+**REPLACE WITH (adds 5 new lines):**
+```hcl
+locals {
+  appgw_name                  = "appgw-${var.fullname}-001"
+  appgw_name_fqdn             = "appgw-${var.fullname}-001.${var.appgw_dns_zone_name}"
+  appgw_managed_identity_name = "id-${local.appgw_name}"
+
+  # ArgoCD listener helpers — empty list disables all ArgoCD dynamic blocks
+  argocd_domain_set    = var.argocd_domain != null && var.argocd_domain != ""
+  argocd_cert_name     = local.argocd_domain_set ? replace(var.argocd_domain, ".", "-") : ""
+  argocd_listener_list = local.argocd_domain_set ? [var.argocd_domain] : []
+}
+```
+
+---
+
+### Change B — Lines 27–30 (first `local-exec` provisioner — `sleep 60`)
+
+**FIND this (lines 27–30, inside `role_assignment_certificates_appgw`):**
+```hcl
+  provisioner "local-exec" {
+    command = "sleep 60"
+  }
+```
+
+**REPLACE WITH:**
+```hcl
+  provisioner "local-exec" {
+    command     = "Start-Sleep -Seconds 60"
+    interpreter = ["PowerShell", "-Command"]
+  }
+```
+
+---
+
+### Change C — Lines 38–41 (second `local-exec` provisioner — `sleep 60`)
+
+**FIND this (lines 38–41, inside `role_assignment_secrets_appgw`):**
+```hcl
+  provisioner "local-exec" {
+    command = "sleep 60"
+  }
+```
+
+**REPLACE WITH:**
+```hcl
+  provisioner "local-exec" {
+    command     = "Start-Sleep -Seconds 60"
+    interpreter = ["PowerShell", "-Command"]
+  }
+```
+
+---
+
+### Change D — Lines 232–247 (the `lifecycle` block of `azurerm_application_gateway`)
+
+**FIND this (lines 232–247):**
+```hcl
+  lifecycle { # necessary because we configure the application gateway through kubectl
+    ignore_changes = [
+      // ssl_certificate,
+      url_path_map,
+      backend_address_pool,
+      backend_http_settings,
+      http_listener,
+      request_routing_rule,
+      rewrite_rule_set,
+      probe,
+      frontend_port,
+      global,
+      tags
+    ]
+  }
+```
+
+**REPLACE WITH (adds `redirect_configuration` on line 240):**
+```hcl
+  lifecycle { # necessary because we configure the application gateway through kubectl
+    ignore_changes = [
+      // ssl_certificate,
+      url_path_map,
+      backend_address_pool,
+      backend_http_settings,
+      http_listener,
+      request_routing_rule,
+      redirect_configuration,
+      rewrite_rule_set,
+      probe,
+      frontend_port,
+      global,
+      tags
+    ]
+  }
+```
+
+---
+
+### Change E — After line 318 (after the `frontend_port 443` block, before `gateway_ip_configuration`)
+
+**FIND this block (lines 306–323):**
+```hcl
+  frontend_port {
+    name = "frontend-port-${local.appgw_name}"
+    port = 443
+  }
+
+  gateway_ip_configuration {
+```
+
+**REPLACE WITH (insert the new dynamic port 80 block between them):**
+```hcl
+  frontend_port {
+    name = "frontend-port-${local.appgw_name}"
+    port = 443
+  }
+
+  # HTTP port 80 — used only for the ArgoCD HTTP→HTTPS redirect listener
+  dynamic "frontend_port" {
+    for_each = local.argocd_listener_list
+    content {
+      name = "frontend-port-http-${local.appgw_name}"
+      port = 80
+    }
+  }
+
+  gateway_ip_configuration {
+```
+
+---
+
+### Change F — After line 332 (after the default `http_listener` block)
+
+**FIND this block (lines 325–332):**
+```hcl
+  http_listener {
+    name                           = "listener-default-${local.appgw_name}"
+    frontend_ip_configuration_name = "Private"
+    frontend_port_name             = "frontend-port-${local.appgw_name}"
+    protocol                       = "Https"
+    host_name                      = local.appgw_name
+    ssl_certificate_name           = local.appgw_name
+  }
+```
+
+**REPLACE WITH (keep the original + add two new dynamic blocks after it):**
+```hcl
+  http_listener {
+    name                           = "listener-default-${local.appgw_name}"
+    frontend_ip_configuration_name = "Private"
+    frontend_port_name             = "frontend-port-${local.appgw_name}"
+    protocol                       = "Https"
+    host_name                      = local.appgw_name
+    ssl_certificate_name           = local.appgw_name
+  }
+
+  # ArgoCD HTTPS listener — terminated at the gateway using the ArgoCD KV certificate
+  dynamic "http_listener" {
+    for_each = local.argocd_listener_list
+    content {
+      name                           = "listener-argocd-https-${local.appgw_name}"
+      frontend_ip_configuration_name = "Private"
+      frontend_port_name             = "frontend-port-${local.appgw_name}"
+      protocol                       = "Https"
+      host_name                      = http_listener.value
+      ssl_certificate_name           = local.argocd_cert_name
+    }
+  }
+
+  # ArgoCD HTTP listener — receives plain-text traffic and redirects to HTTPS
+  dynamic "http_listener" {
+    for_each = local.argocd_listener_list
+    content {
+      name                           = "listener-argocd-http-${local.appgw_name}"
+      frontend_ip_configuration_name = "Private"
+      frontend_port_name             = "frontend-port-http-${local.appgw_name}"
+      protocol                       = "Http"
+      host_name                      = http_listener.value
+    }
+  }
+```
+
+---
+
+### Change G — After the default `request_routing_rule` block (around line 372)
+
+**FIND this block (lines 365–372):**
+```hcl
+  request_routing_rule {
+    name                       = "default-rule-${local.appgw_name}"
+    rule_type                  = var.appgw_request_routing_rule.rule_type
+    http_listener_name         = "listener-default-${local.appgw_name}"
+    backend_address_pool_name  = "default_bep-${local.appgw_name}"
+    backend_http_settings_name = "bep-default-${local.appgw_name}"
+    priority                   = var.appgw_request_routing_rule.priority
+  }
+```
+
+**REPLACE WITH (keep original + add 4 new dynamic blocks after it):**
+```hcl
+  request_routing_rule {
+    name                       = "default-rule-${local.appgw_name}"
+    rule_type                  = var.appgw_request_routing_rule.rule_type
+    http_listener_name         = "listener-default-${local.appgw_name}"
+    backend_address_pool_name  = "default_bep-${local.appgw_name}"
+    backend_http_settings_name = "bep-default-${local.appgw_name}"
+    priority                   = var.appgw_request_routing_rule.priority
+  }
+
+  # ArgoCD backend address pool — AGIC will populate the IP addresses after first apply
+  dynamic "backend_address_pool" {
+    for_each = local.argocd_listener_list
+    content {
+      name = "bep-argocd-${local.appgw_name}"
+    }
+  }
+
+  # ArgoCD backend HTTP settings — targets ArgoCD server on port 443 internally
+  dynamic "backend_http_settings" {
+    for_each = local.argocd_listener_list
+    content {
+      name                  = "bhs-argocd-${local.appgw_name}"
+      cookie_based_affinity = "Disabled"
+      port                  = 443
+      protocol              = "Https"
+      request_timeout       = 60
+    }
+  }
+
+  # ArgoCD HTTPS → backend routing rule
+  dynamic "request_routing_rule" {
+    for_each = local.argocd_listener_list
+    content {
+      name                       = "rule-argocd-https-${local.appgw_name}"
+      rule_type                  = "Basic"
+      priority                   = 100
+      http_listener_name         = "listener-argocd-https-${local.appgw_name}"
+      backend_address_pool_name  = "bep-argocd-${local.appgw_name}"
+      backend_http_settings_name = "bhs-argocd-${local.appgw_name}"
+    }
+  }
+
+  # ArgoCD HTTP → HTTPS redirect routing rule
+  dynamic "request_routing_rule" {
+    for_each = local.argocd_listener_list
+    content {
+      name                        = "rule-argocd-http-redirect-${local.appgw_name}"
+      rule_type                   = "Basic"
+      priority                    = 110
+      http_listener_name          = "listener-argocd-http-${local.appgw_name}"
+      redirect_configuration_name = "redirect-argocd-http-to-https-${local.appgw_name}"
+    }
+  }
+
+  # HTTP → HTTPS redirect configuration for ArgoCD
+  dynamic "redirect_configuration" {
+    for_each = local.argocd_listener_list
+    content {
+      name                 = "redirect-argocd-http-to-https-${local.appgw_name}"
+      redirect_type        = "Permanent"
+      target_listener_name = "listener-argocd-https-${local.appgw_name}"
+      include_path         = true
+      include_query_string = true
+    }
+  }
+```
+
+---
+
+## FILE 4 — `terraform/modules/aks/variables_appgw.tf`
+
+**Action: Append these lines at the VERY END of the file (after line 195).**
+
+```hcl
+
+variable "argocd_domain" {
+  type        = string
+  description = "The fully-qualified domain name for the ArgoCD UI (e.g. argocd.settlement.acc.tennet.cloud). When set, a dedicated HTTPS listener (SNI-based, using the matching KV certificate) and an HTTP→HTTPS redirect listener are bootstrapped on the Application Gateway. Leave null to disable all ArgoCD-specific resources."
+  default     = null
+}
+```
+
+---
+
+## FILE 5 — `terraform/modules/aks/key_vault.tf`
+
+### Change — Lines 66–69 (the `local-exec` provisioner — `sleep 60`)
+
+**FIND this (lines 66–69, inside `role_assignments_current_user`):**
+```hcl
+  provisioner "local-exec" {
+    command = "sleep 60"
+  }
+```
+
+**REPLACE WITH:**
+```hcl
+  provisioner "local-exec" {
+    command     = "Start-Sleep -Seconds 60"
+    interpreter = ["PowerShell", "-Command"]
+  }
+```
+
+---
+
+## Final Checklist
+
+```
+[ ] FILE 1: terraform/ssl_certs.tf
+      → Entire file replaced with data source block
+
+[ ] FILE 2: terraform/main.tf
+      → Line 18: azurerm_key_vault_certificate → data.azurerm_key_vault_certificate
+      → Line 18: .secret_id → .versionless_secret_id
+      → Line 82: argocd_domain = try(local.aks.argocd_domain, null)  (add if missing)
+
+[ ] FILE 3: terraform/modules/aks/appgw.tf
+      → Lines 1–10:  locals{} block — add 5 ArgoCD helper lines
+      → Lines 27–30: sleep 60 → Start-Sleep -Seconds 60 (PowerShell interpreter)
+      → Lines 38–41: sleep 60 → Start-Sleep -Seconds 60 (PowerShell interpreter)
+      → Lines 232–247: lifecycle — add redirect_configuration to ignore_changes
+      → After line 309: add dynamic frontend_port port=80 block
+      → After line 332: add 2 dynamic http_listener blocks (HTTPS + HTTP)
+      → After line 372: add 4 dynamic blocks (backend_pool, backend_settings, 2x routing rules, redirect)
+
+[ ] FILE 4: terraform/modules/aks/variables_appgw.tf
+      → Append argocd_domain variable at end of file
+
+[ ] FILE 5: terraform/modules/aks/key_vault.tf
+      → Lines 66–69: sleep 60 → Start-Sleep -Seconds 60 (PowerShell interpreter)
+```
+
+---
+
+## Pre-apply commands (run in order)
+
+```bash
+# 1. If the old resource exists in state from a previous apply, remove it:
+terraform state rm 'azurerm_key_vault_certificate.argocd_ssl_certificate[0]'
+
+# 2. Validate the config
+terraform validate
+
+# 3. Preview changes
+terraform plan
+
+# 4. Apply
+terraform apply
+```
