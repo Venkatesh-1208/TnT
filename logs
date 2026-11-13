@@ -1,50 +1,1028 @@
-2026-11-12T14:56:22.4926623Z ##[section]Starting: Terraform: plan
-2026-11-12T14:56:22.4940199Z ==============================================================================
-2026-11-12T14:56:22.4940412Z Task         : Terraform
-2026-11-12T14:56:22.4940516Z Description  : Execute terraform commands to manage resources on AzureRM, Amazon Web Services(AWS), Google Cloud Platform(GCP) and Oracle Cloud Infrastructure(OCI). v4.241.11
-2026-11-12T14:56:22.4940773Z Version      : 4.241.36
-2026-11-12T14:56:22.4940898Z Author       : Microsoft Corporation
-2026-11-12T14:56:22.4941034Z Help         : [Learn more about this task](https://aka.ms/devlabs/ado/tf/task/v4)
-2026-11-12T14:56:22.4941195Z ==============================================================================
-2026-11-12T14:56:22.5661099Z [Host] Selected Node version: Node20 (Strategy: Node20Strategy)
-2026-11-12T14:56:23.5516847Z [command]/opt/hostedtoolcache/terraform/1.9.5/x64/terraform providers
-2026-11-12T14:56:28.0238264Z 
-2026-11-12T14:56:28.0239378Z Providers required by configuration:
-2026-11-12T14:56:28.0240393Z .
-2026-11-12T14:56:28.0241709Z ├── provider[registry.terraform.io/hashicorp/tls] ~> 4.0
-2026-11-12T14:56:28.0242246Z ├── provider[registry.terraform.io/hashicorp/azurerm] ~> 4.0
-2026-11-12T14:56:28.0242718Z ├── provider[registry.terraform.io/azure/azapi] ~> 1.0
-2026-11-12T14:56:28.0243181Z ├── provider[registry.terraform.io/hashicorp/azuread] ~> 3.0
-2026-11-12T14:56:28.0243702Z ├── provider[registry.terraform.io/hashicorp/random] ~> 3.0
-2026-11-12T14:56:28.0244183Z ├── provider[registry.terraform.io/hashicorp/template] ~> 2.0
-2026-11-12T14:56:28.0244627Z ├── provider[registry.terraform.io/hashicorp/null] ~> 3.0
-2026-11-12T14:56:28.0246075Z └── module.aks
-2026-11-12T14:56:28.0246629Z     ├── provider[registry.terraform.io/hashicorp/time] ~> 0.13
-2026-11-12T14:56:28.0247304Z     ├── provider[registry.terraform.io/hashicorp/azurerm] ~> 4.0
-2026-11-12T14:56:28.0247759Z     ├── provider[registry.terraform.io/hashicorp/azuread] ~> 3.0
-2026-11-12T14:56:28.0248192Z     └── module.backup
-2026-11-12T14:56:28.0249072Z         ├── provider[registry.terraform.io/hashicorp/time] ~> 0.13
-2026-11-12T14:56:28.0249636Z         └── provider[registry.terraform.io/hashicorp/azurerm] ~> 4.0
-2026-11-12T14:56:28.0249874Z 
-2026-11-12T14:56:28.0250339Z Providers required by state:
-2026-11-12T14:56:28.0250774Z 
-2026-11-12T14:56:28.0251203Z     provider[registry.terraform.io/hashicorp/azuread]
-2026-11-12T14:56:28.0251428Z 
-2026-11-12T14:56:28.0251778Z     provider[registry.terraform.io/hashicorp/azurerm]
-2026-11-12T14:56:28.0251997Z 
-2026-11-12T14:56:28.0252339Z     provider[registry.terraform.io/hashicorp/time]
-2026-11-12T14:56:28.0252563Z 
-2026-11-12T14:56:28.0283383Z [command]/opt/hostedtoolcache/terraform/1.9.5/x64/terraform plan -detailed-exitcode
-2026-11-12T14:56:33.0797794Z [31m╷[0m[0m
-2026-11-12T14:56:33.0806970Z [31m│[0m [0m[1m[31mError: [0m[0m[1mReference to undeclared resource[0m
-2026-11-12T14:56:33.0809079Z [31m│[0m [0m
-2026-11-12T14:56:33.0809599Z [31m│[0m [0m[0m  on main.tf line 12, in locals:
-2026-11-12T14:56:33.0810219Z [31m│[0m [0m  12:       key_vault_secret_id = "${[4mdata.azurerm_key_vault.kv[0m.vault_uri}secrets/${replace(local.aks.argocd_domain, ".", "-")}"[0m
-2026-11-12T14:56:33.0810734Z [31m│[0m [0m
-2026-11-12T14:56:33.0811252Z [31m│[0m [0mA data resource "azurerm_key_vault" "kv" has not been declared in the root
-2026-11-12T14:56:33.0811810Z [31m│[0m [0mmodule.
-2026-11-12T14:56:33.0812186Z [31m╵[0m[0m
-2026-11-12T14:56:33.0936673Z 
-2026-11-12T14:56:33.1076690Z ##[warning]Can't find loc string for key: TerraformPlanFailed
-2026-11-12T14:56:33.1098261Z ##[error]Error: TerraformPlanFailed 1
-2026-11-12T14:56:33.1124998Z ##[section]Finishing: Terraform: plan
+2026-11-12T15:29:58.4439476Z Terraform will perform the following actions:
+2026-11-12T15:29:58.4439627Z 
+2026-11-12T15:29:58.4439970Z [1m  # data.azurerm_kubernetes_cluster.aks[0m will be read during apply
+2026-11-12T15:29:58.4440335Z   # (depends on a resource or a module with changes pending)
+2026-11-12T15:29:58.4440702Z [0m [36m<=[0m[0m data "azurerm_kubernetes_cluster" "aks" {
+2026-11-12T15:29:58.4441106Z       [32m+[0m[0m aci_connector_linux                              = (known after apply)
+2026-11-12T15:29:58.4441499Z       [32m+[0m[0m agent_pool_profile                               = (known after apply)
+2026-11-12T15:29:58.4441918Z       [32m+[0m[0m api_server_authorized_ip_ranges                  = (known after apply)
+2026-11-12T15:29:58.4442442Z       [32m+[0m[0m azure_active_directory_role_based_access_control = (known after apply)
+2026-11-12T15:29:58.4442876Z       [32m+[0m[0m azure_policy_enabled                             = (known after apply)
+2026-11-12T15:29:58.4443283Z       [32m+[0m[0m bootstrap_profile                                = (known after apply)
+2026-11-12T15:29:58.4443855Z       [32m+[0m[0m current_kubernetes_version                       = (known after apply)
+2026-11-12T15:29:58.4444350Z       [32m+[0m[0m disk_encryption_set_id                           = (known after apply)
+2026-11-12T15:29:58.4444758Z       [32m+[0m[0m dns_prefix                                       = (known after apply)
+2026-11-12T15:29:58.4445168Z       [32m+[0m[0m fqdn                                             = (known after apply)
+2026-11-12T15:29:58.4445678Z       [32m+[0m[0m http_application_routing_enabled                 = (known after apply)
+2026-11-12T15:29:58.4446119Z       [32m+[0m[0m http_application_routing_zone_name               = (known after apply)
+2026-11-12T15:29:58.4446545Z       [32m+[0m[0m id                                               = (known after apply)
+2026-11-12T15:29:58.4446934Z       [32m+[0m[0m identity                                         = (known after apply)
+2026-11-12T15:29:58.4447366Z       [32m+[0m[0m ingress_application_gateway                      = (known after apply)
+2026-11-12T15:29:58.4447805Z       [32m+[0m[0m key_management_service                           = (known after apply)
+2026-11-12T15:29:58.4448230Z       [32m+[0m[0m key_vault_secrets_provider                       = (known after apply)
+2026-11-12T15:29:58.4448661Z       [32m+[0m[0m kube_admin_config                                = (sensitive value)
+2026-11-12T15:29:58.4449078Z       [32m+[0m[0m kube_admin_config_raw                            = (sensitive value)
+2026-11-12T15:29:58.4449501Z       [32m+[0m[0m kube_config                                      = (sensitive value)
+2026-11-12T15:29:58.4449904Z       [32m+[0m[0m kube_config_raw                                  = (sensitive value)
+2026-11-12T15:29:58.4450330Z       [32m+[0m[0m kubelet_identity                                 = (known after apply)
+2026-11-12T15:29:58.4450821Z       [32m+[0m[0m kubernetes_version                               = (known after apply)
+2026-11-12T15:29:58.4451230Z       [32m+[0m[0m linux_profile                                    = (known after apply)
+2026-11-12T15:29:58.4451706Z       [32m+[0m[0m location                                         = (known after apply)
+2026-11-12T15:29:58.4452110Z       [32m+[0m[0m microsoft_defender                               = (known after apply)
+2026-11-12T15:29:58.4452666Z       [32m+[0m[0m name                                             = "aks-nl-myte1-acc-euw-aks-001"
+2026-11-12T15:29:58.4453098Z       [32m+[0m[0m network_profile                                  = (known after apply)
+2026-11-12T15:29:58.4453570Z       [32m+[0m[0m node_resource_group                              = (known after apply)
+2026-11-12T15:29:58.4454002Z       [32m+[0m[0m node_resource_group_id                           = (known after apply)
+2026-11-12T15:29:58.4454416Z       [32m+[0m[0m oidc_issuer_enabled                              = (known after apply)
+2026-11-12T15:29:58.4454845Z       [32m+[0m[0m oidc_issuer_url                                  = (known after apply)
+2026-11-12T15:29:58.4455244Z       [32m+[0m[0m oms_agent                                        = (known after apply)
+2026-11-12T15:29:58.4455676Z       [32m+[0m[0m open_service_mesh_enabled                        = (known after apply)
+2026-11-12T15:29:58.4456116Z       [32m+[0m[0m private_cluster_enabled                          = (known after apply)
+2026-11-12T15:29:58.4456527Z       [32m+[0m[0m private_fqdn                                     = (known after apply)
+2026-11-12T15:29:58.4456970Z       [32m+[0m[0m resource_group_name                              = "rg-nl-myte1-acc-euw-aks-001"
+2026-11-12T15:29:58.4457411Z       [32m+[0m[0m role_based_access_control_enabled                = (known after apply)
+2026-11-12T15:29:58.4457888Z       [32m+[0m[0m service_mesh_profile                             = (known after apply)
+2026-11-12T15:29:58.4458304Z       [32m+[0m[0m service_principal                                = (known after apply)
+2026-11-12T15:29:58.4458729Z       [32m+[0m[0m storage_profile                                  = (known after apply)
+2026-11-12T15:29:58.4459137Z       [32m+[0m[0m tags                                             = (known after apply)
+2026-11-12T15:29:58.4459537Z       [32m+[0m[0m windows_profile                                  = (known after apply)
+2026-11-12T15:29:58.4459860Z     }
+2026-11-12T15:29:58.4459968Z 
+2026-11-12T15:29:58.4460384Z [1m  # azurerm_key_vault_certificate.argocd_ssl_certificate[0][0m will be updated in-place
+2026-11-12T15:29:58.4460847Z [0m  [33m~[0m[0m resource "azurerm_key_vault_certificate" "argocd_ssl_certificate" {
+2026-11-12T15:29:58.4461414Z         id                              = "https://kvnlmyte1accuwaks001.vault.azure.net/certificates/argocd-mytennet-acc-tennet-cloud/548559974819485d89fb5d8171c44a1e"
+2026-11-12T15:29:58.4461832Z         name                            = "argocd-mytennet-acc-tennet-cloud"
+2026-11-12T15:29:58.4462169Z       [33m~[0m[0m tags                            = {
+2026-11-12T15:29:58.4462655Z           [31m-[0m[0m "CertificateOwner" = "tennetrun.in@capgemini.com" [90m-> null[0m[0m
+2026-11-12T15:29:58.4462959Z         }
+2026-11-12T15:29:58.4463323Z         [90m# (11 unchanged attributes hidden)[0m[0m
+2026-11-12T15:29:58.4463479Z 
+2026-11-12T15:29:58.4463796Z         [90m# (2 unchanged blocks hidden)[0m[0m
+2026-11-12T15:29:58.4464090Z     }
+2026-11-12T15:29:58.4464189Z 
+2026-11-12T15:29:58.4464553Z [1m  # azurerm_resource_group.aks_resources[0m will be updated in-place
+2026-11-12T15:29:58.4464956Z [0m  [33m~[0m[0m resource "azurerm_resource_group" "aks_resources" {
+2026-11-12T15:29:58.4465377Z         id         = "/subscriptions/***/resourceGroups/rg-nl-myte1-acc-euw-aks-003"
+2026-11-12T15:29:58.4465712Z         name       = "rg-nl-myte1-acc-euw-aks-003"
+2026-11-12T15:29:58.4466115Z       [33m~[0m[0m tags       = {
+2026-11-12T15:29:58.4466426Z             "ApplicationName"      = "MyTenneT"
+2026-11-12T15:29:58.4466729Z             "ApproverContact"      = "coos.walinga@tennet.eu"
+2026-11-12T15:29:58.4467058Z             "BusinessContact"      = "carry.block@tennet.eu"
+2026-11-12T15:29:58.4467445Z           [33m~[0m[0m "BusinessLevel"        = "non-critical" [33m->[0m[0m "Non-critical"
+2026-11-12T15:29:58.4467784Z             "BusinessUnit"         = "BTO-SM-CA"
+2026-11-12T15:29:58.4468068Z             "CMDB-ID"              = "BA00098"
+2026-11-12T15:29:58.4468374Z             "CostCentre"           = "I-1000110-13-07-01"
+2026-11-12T15:29:58.4468944Z             "CreatedBy"            = "terraform"
+2026-11-12T15:29:58.4469272Z             "DataClassification"   = "C3 I3 A3"
+2026-11-12T15:29:58.4469592Z             "DateCreated"          = "01-08-2025"
+2026-11-12T15:29:58.4469921Z             "DisasterRecovery"     = "false"
+2026-11-12T15:29:58.4470249Z             "Environment"          = "Acceptance"
+2026-11-12T15:29:58.4470575Z             "IaaSUpdateSchedule"   = "1month3wednesday"
+2026-11-12T15:29:58.4470918Z             "OperationsCommitment" = "MCP_RUN"
+2026-11-12T15:29:58.4471255Z             "OperationsContact"    = "team.thechallengers@tennet.eu"
+2026-11-12T15:29:58.4471596Z             "OrgCode"              = "Ten"
+2026-11-12T15:29:58.4471911Z             "Owner"                = "emma.van.der.veen@tennet.eu"
+2026-11-12T15:29:58.4472433Z           [31m-[0m[0m "OwnerEmail"           = "emma.van.der.veen@tennet.eu" [90m-> null[0m[0m
+2026-11-12T15:29:58.4472805Z             "RegionName"           = "Netherlands"
+2026-11-12T15:29:58.4473137Z             "ServiceClass"         = "Bronze"
+2026-11-12T15:29:58.4473471Z             "ServiceType"          = "CPS.MSA.24004.001"
+2026-11-12T15:29:58.4473791Z             "SolutionGroup"        = "CAP MCP"
+2026-11-12T15:29:58.4474121Z             "UnitCode"             = "CPS.MSA.24004.001"
+2026-11-12T15:29:58.4474479Z             "Workload"             = "MyTenneT-acc1"
+2026-11-12T15:29:58.4474804Z             "module"               = "landingzone"
+2026-11-12T15:29:58.4475084Z         }
+2026-11-12T15:29:58.4475450Z         [90m# (2 unchanged attributes hidden)[0m[0m
+2026-11-12T15:29:58.4475750Z     }
+2026-11-12T15:29:58.4475876Z 
+2026-11-12T15:29:58.4476255Z [1m  # azurerm_role_assignment.aks_rbac_cluster_admin[0m will be created
+2026-11-12T15:29:58.4476715Z [0m  [32m+[0m[0m resource "azurerm_role_assignment" "aks_rbac_cluster_admin" {
+2026-11-12T15:29:58.4477139Z       [32m+[0m[0m condition_version                = (known after apply)
+2026-11-12T15:29:58.4477551Z       [32m+[0m[0m id                               = (known after apply)
+2026-11-12T15:29:58.4477950Z       [32m+[0m[0m name                             = (known after apply)
+2026-11-12T15:29:58.4478371Z       [32m+[0m[0m principal_id                     = "395e0e50-f01f-4356-b798-5b5c91d5784a"
+2026-11-12T15:29:58.4478803Z       [32m+[0m[0m principal_type                   = (known after apply)
+2026-11-12T15:29:58.4479253Z       [32m+[0m[0m role_definition_id               = (known after apply)
+2026-11-12T15:29:58.4479708Z       [32m+[0m[0m role_definition_name             = "Azure Kubernetes Service RBAC Cluster Admin"
+2026-11-12T15:29:58.4480158Z       [32m+[0m[0m scope                            = (known after apply)
+2026-11-12T15:29:58.4480575Z       [32m+[0m[0m skip_service_principal_aad_check = (known after apply)
+2026-11-12T15:29:58.4480904Z     }
+2026-11-12T15:29:58.4481013Z 
+2026-11-12T15:29:58.4481423Z [1m  # azurerm_user_assigned_identity.ado_managed_identity[0m will be updated in-place
+2026-11-12T15:29:58.4481894Z [0m  [33m~[0m[0m resource "azurerm_user_assigned_identity" "ado_managed_identity" {
+2026-11-12T15:29:58.4482526Z         id                  = "/subscriptions/***/resourceGroups/rg-nl-myte1-acc-euw-aks-003/providers/Microsoft.ManagedIdentity/userAssignedIdentities/ado-nl-myte1-acc-euw-aks-identity"
+2026-11-12T15:29:58.4483087Z         name                = "ado-nl-myte1-acc-euw-aks-identity"
+2026-11-12T15:29:58.4483454Z       [33m~[0m[0m tags                = {
+2026-11-12T15:29:58.4483872Z           [31m-[0m[0m "ApproverContact"   = "coos.walinga@tennet.eu" [90m-> null[0m[0m
+2026-11-12T15:29:58.4484407Z           [31m-[0m[0m "BusinessContact"   = "carry.block@tennet.eu" [90m-> null[0m[0m
+2026-11-12T15:29:58.4484837Z           [31m-[0m[0m "OperationsContact" = "team.thechallengers@tennet.eu" [90m-> null[0m[0m
+2026-11-12T15:29:58.4485265Z           [31m-[0m[0m "Owner"             = "emma.van.der.veen@tennet.eu" [90m-> null[0m[0m
+2026-11-12T15:29:58.4485729Z           [31m-[0m[0m "OwnerEmail"        = "emma.van.der.veen@tennet.eu" [90m-> null[0m[0m
+2026-11-12T15:29:58.4486130Z           [31m-[0m[0m "RegionName"        = "Netherlands" [90m-> null[0m[0m
+2026-11-12T15:29:58.4486450Z         }
+2026-11-12T15:29:58.4486783Z         [90m# (6 unchanged attributes hidden)[0m[0m
+2026-11-12T15:29:58.4487066Z     }
+2026-11-12T15:29:58.4487182Z 
+2026-11-12T15:29:58.4487561Z [1m  # module.aks.data.azurerm_user_assigned_identity.aks_ingress_uaid[0m will be read during apply
+2026-11-12T15:29:58.4487948Z   # (depends on a resource or a module with changes pending)
+2026-11-12T15:29:58.4488359Z [0m [36m<=[0m[0m data "azurerm_user_assigned_identity" "aks_ingress_uaid" {
+2026-11-12T15:29:58.4488734Z       [32m+[0m[0m client_id           = (known after apply)
+2026-11-12T15:29:58.4489096Z       [32m+[0m[0m id                  = (known after apply)
+2026-11-12T15:29:58.4489449Z       [32m+[0m[0m isolation_scope     = (known after apply)
+2026-11-12T15:29:58.4489823Z       [32m+[0m[0m location            = (known after apply)
+2026-11-12T15:29:58.4490222Z       [32m+[0m[0m name                = "ingressapplicationgateway-aks-nl-myte1-acc-euw-aks-001"
+2026-11-12T15:29:58.4490624Z       [32m+[0m[0m principal_id        = (known after apply)
+2026-11-12T15:29:58.4491026Z       [32m+[0m[0m resource_group_name = "rg-nl-myte1-acc-euw-aks-nodes-001"
+2026-11-12T15:29:58.4491584Z       [32m+[0m[0m tags                = (known after apply)
+2026-11-12T15:29:58.4491974Z       [32m+[0m[0m tenant_id           = (known after apply)
+2026-11-12T15:29:58.4492381Z     }
+2026-11-12T15:29:58.4492520Z 
+2026-11-12T15:29:58.4492907Z [1m  # module.aks.azurerm_application_gateway.appgw[0m will be updated in-place
+2026-11-12T15:29:58.4493352Z [0m  [33m~[0m[0m resource "azurerm_application_gateway" "appgw" {
+2026-11-12T15:29:58.4493871Z         id                                = "/subscriptions/***/resourceGroups/rg-nl-myte1-acc-euw-aks-001/providers/Microsoft.Network/applicationGateways/appgw-nl-myte1-acc-euw-aks-001"
+2026-11-12T15:29:58.4494312Z         name                              = "appgw-nl-myte1-acc-euw-aks-001"
+2026-11-12T15:29:58.4494645Z         tags                              = {
+2026-11-12T15:29:58.4494950Z             "ApplicationName"        = "MyTenneT"
+2026-11-12T15:29:58.4495301Z             "ApproverContact"        = "coos.walinga@tennet.eu"
+2026-11-12T15:29:58.4495656Z             "BusinessContact"        = "carry.block@tennet.eu"
+2026-11-12T15:29:58.4495988Z             "BusinessLevel"          = "non-critical"
+2026-11-12T15:29:58.4496327Z             "BusinessUnit"           = "BTO-SM-CA"
+2026-11-12T15:29:58.4496644Z             "CMDB-ID"                = "MyTenneT Cloud"
+2026-11-12T15:29:58.4496978Z             "CostCentre"             = "I-1000110-13-07-01"
+2026-11-12T15:29:58.4497296Z             "CreatedBy"              = "terraform"
+2026-11-12T15:29:58.4497620Z             "DataClassification"     = "C3 I3 A3"
+2026-11-12T15:29:58.4497973Z             "DateCreated"            = "01-08-2025"
+2026-11-12T15:29:58.4498303Z             "DisasterRecovery"       = "false"
+2026-11-12T15:29:58.4498616Z             "Environment"            = "Acceptance"
+2026-11-12T15:29:58.4498959Z             "IaaSUpdateSchedule"     = "1month3wednesday"
+2026-11-12T15:29:58.4499363Z             "OperationsCommitment"   = "MCP_RUN"
+2026-11-12T15:29:58.4499704Z             "OperationsContact"      = "team.thechallengers@tennet.eu"
+2026-11-12T15:29:58.4500044Z             "OrgCode"                = "ten"
+2026-11-12T15:29:58.4500356Z             "Owner"                  = "emma.van.der.veen@tennet.eu"
+2026-11-12T15:29:58.4500707Z             "OwnerEmail"             = "emma.van.der.veen@tennet.eu"
+2026-11-12T15:29:58.4501032Z             "RegionName"             = "Netherlands"
+2026-11-12T15:29:58.4501354Z             "ServiceClass"           = "Bronze"
+2026-11-12T15:29:58.4501669Z             "ServiceType"            = "CPS.MSA.24004.001"
+2026-11-12T15:29:58.4502104Z             "SolutionGroup"          = "CAP MCP"
+2026-11-12T15:29:58.4502515Z             "UnitCode"               = "CPS.MSA.24003.001"
+2026-11-12T15:29:58.4502853Z             "Workload"               = "MyTenneT-acc1"
+2026-11-12T15:29:58.4503282Z             "managed-by-k8s-ingress" = "1.8.1/05a0d9c7/2025-04-04-14:12T-0700"
+2026-11-12T15:29:58.4503649Z             "module"                 = "azure-kubernetes-service"
+2026-11-12T15:29:58.4503965Z         }
+2026-11-12T15:29:58.4504328Z         [90m# (9 unchanged attributes hidden)[0m[0m
+2026-11-12T15:29:58.4504488Z 
+2026-11-12T15:29:58.4504802Z       [33m~[0m[0m identity {
+2026-11-12T15:29:58.4505168Z           [33m~[0m[0m identity_ids = [
+2026-11-12T15:29:58.4505799Z               [31m-[0m[0m "/subscriptions/***/resourceGroups/rg-nl-myte1-acc-euw-aks-001/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-appgw-nl-myte1-acc-euw-aks-001",
+2026-11-12T15:29:58.4506245Z             ] -> (known after apply)
+2026-11-12T15:29:58.4506632Z             [90m# (3 unchanged attributes hidden)[0m[0m
+2026-11-12T15:29:58.4506932Z         }
+2026-11-12T15:29:58.4507053Z 
+2026-11-12T15:29:58.4507391Z         [90m# (113 unchanged blocks hidden)[0m[0m
+2026-11-12T15:29:58.4507709Z     }
+2026-11-12T15:29:58.4507816Z 
+2026-11-12T15:29:58.4508208Z [1m  # module.aks.azurerm_key_vault.keyvault[0][0m will be updated in-place
+2026-11-12T15:29:58.4508644Z [0m  [33m~[0m[0m resource "azurerm_key_vault" "keyvault" {
+2026-11-12T15:29:58.4509115Z         id                              = "/subscriptions/***/resourceGroups/rg-nl-myte1-acc-euw-aks-001/providers/Microsoft.KeyVault/vaults/kvnlmyte1accuwaks001"
+2026-11-12T15:29:58.4509576Z         name                            = "kvnlmyte1accuwaks001"
+2026-11-12T15:29:58.4509998Z       [33m~[0m[0m public_network_access_enabled   = true [33m->[0m[0m false
+2026-11-12T15:29:58.4510383Z       [33m~[0m[0m tags                            = {
+2026-11-12T15:29:58.4510706Z             "ApplicationName"      = "MyTenneT"
+2026-11-12T15:29:58.4511036Z             "ApproverContact"      = "coos.walinga@tennet.eu"
+2026-11-12T15:29:58.4511388Z             "BusinessContact"      = "carry.block@tennet.eu"
+2026-11-12T15:29:58.4511809Z           [33m~[0m[0m "BusinessLevel"        = "non-critical" [33m->[0m[0m "Non-critical"
+2026-11-12T15:29:58.4512178Z             "BusinessUnit"         = "BTO-SM-CA"
+2026-11-12T15:29:58.4512590Z             "CMDB-ID"              = "BA00098"
+2026-11-12T15:29:58.4512917Z             "CostCentre"           = "I-1000110-13-07-01"
+2026-11-12T15:29:58.4513248Z             "CreatedBy"            = "terraform"
+2026-11-12T15:29:58.4513556Z             "DataClassification"   = "C3 I3 A3"
+2026-11-12T15:29:58.4514002Z             "DateCreated"          = "01-08-2025"
+2026-11-12T15:29:58.4514296Z             "DisasterRecovery"     = "false"
+2026-11-12T15:29:58.4514601Z             "Environment"          = "Acceptance"
+2026-11-12T15:29:58.4514939Z             "IaaSUpdateSchedule"   = "1month3wednesday"
+2026-11-12T15:29:58.4515263Z             "OperationsCommitment" = "MCP_RUN"
+2026-11-12T15:29:58.4515579Z             "OperationsContact"    = "team.thechallengers@tennet.eu"
+2026-11-12T15:29:58.4515903Z             "OrgCode"              = "Ten"
+2026-11-12T15:29:58.4516194Z             "Owner"                = "emma.van.der.veen@tennet.eu"
+2026-11-12T15:29:58.4516665Z           [31m-[0m[0m "OwnerEmail"           = "emma.van.der.veen@tennet.eu" [90m-> null[0m[0m
+2026-11-12T15:29:58.4517006Z             "RegionName"           = "Netherlands"
+2026-11-12T15:29:58.4517292Z             "ServiceClass"         = "Bronze"
+2026-11-12T15:29:58.4517599Z             "ServiceType"          = "CPS.MSA.24004.001"
+2026-11-12T15:29:58.4517892Z             "SolutionGroup"        = "CAP MCP"
+2026-11-12T15:29:58.4518199Z             "UnitCode"             = "CPS.MSA.24003.001"
+2026-11-12T15:29:58.4518490Z             "Workload"             = "MyTenneT-acc1"
+2026-11-12T15:29:58.4518808Z             "module"               = "azure-kubernetes-service"
+2026-11-12T15:29:58.4519146Z         }
+2026-11-12T15:29:58.4519487Z         [90m# (13 unchanged attributes hidden)[0m[0m
+2026-11-12T15:29:58.4519621Z 
+2026-11-12T15:29:58.4519969Z       [33m~[0m[0m network_acls {
+2026-11-12T15:29:58.4520344Z           [33m~[0m[0m default_action             = "Allow" [33m->[0m[0m "Deny"
+2026-11-12T15:29:58.4520713Z             [90m# (3 unchanged attributes hidden)[0m[0m
+2026-11-12T15:29:58.4521003Z         }
+2026-11-12T15:29:58.4521242Z     }
+2026-11-12T15:29:58.4521357Z 
+2026-11-12T15:29:58.4521713Z [1m  # module.aks.azurerm_kubernetes_cluster.aks[0m will be updated in-place
+2026-11-12T15:29:58.4522117Z [0m  [33m~[0m[0m resource "azurerm_kubernetes_cluster" "aks" {
+2026-11-12T15:29:58.4522692Z         id                                  = "/subscriptions/***/resourceGroups/rg-nl-myte1-acc-euw-aks-001/providers/Microsoft.ContainerService/managedClusters/aks-nl-myte1-acc-euw-aks-001"
+2026-11-12T15:29:58.4523175Z       [33m~[0m[0m kubernetes_version                  = "1.33.13" [33m->[0m[0m "1.34.11"
+2026-11-12T15:29:58.4523529Z         name                                = "aks-nl-myte1-acc-euw-aks-001"
+2026-11-12T15:29:58.4523908Z       [33m~[0m[0m run_command_enabled                 = true [33m->[0m[0m false
+2026-11-12T15:29:58.4524277Z       [33m~[0m[0m tags                                = {
+2026-11-12T15:29:58.4524604Z             "ApplicationName"      = "MyTenneT"
+2026-11-12T15:29:58.4524913Z             "ApproverContact"      = "coos.walinga@tennet.eu"
+2026-11-12T15:29:58.4525244Z             "BusinessContact"      = "carry.block@tennet.eu"
+2026-11-12T15:29:58.4525852Z           [33m~[0m[0m "BusinessLevel"        = "non-critical" [33m->[0m[0m "Non-critical"
+2026-11-12T15:29:58.4526218Z             "BusinessUnit"         = "BTO-SM-CA"
+2026-11-12T15:29:58.4526533Z             "CMDB-ID"              = "BA00098"
+2026-11-12T15:29:58.4526864Z             "CostCentre"           = "I-1000110-13-07-01"
+2026-11-12T15:29:58.4527182Z             "CreatedBy"            = "terraform"
+2026-11-12T15:29:58.4527518Z             "DataClassification"   = "C3 I3 A3"
+2026-11-12T15:29:58.4527836Z             "DateCreated"          = "01-08-2025"
+2026-11-12T15:29:58.4528169Z             "DisasterRecovery"     = "false"
+2026-11-12T15:29:58.4528494Z             "Environment"          = "Acceptance"
+2026-11-12T15:29:58.4528819Z             "IaaSUpdateSchedule"   = "1month3wednesday"
+2026-11-12T15:29:58.4529247Z           [33m~[0m[0m "OperationsCommitment" = "MCP_STACK" [33m->[0m[0m "MCP_RUN"
+2026-11-12T15:29:58.4529617Z             "OperationsContact"    = "team.thechallengers@tennet.eu"
+2026-11-12T15:29:58.4530036Z           [33m~[0m[0m "OrgCode"              = "ten" [33m->[0m[0m "Ten"
+2026-11-12T15:29:58.4530479Z             "Owner"                = "emma.van.der.veen@tennet.eu"
+2026-11-12T15:29:58.4530891Z           [31m-[0m[0m "OwnerEmail"           = "emma.van.der.veen@tennet.eu" [90m-> null[0m[0m
+2026-11-12T15:29:58.4531275Z             "RegionName"           = "Netherlands"
+2026-11-12T15:29:58.4531564Z             "ServiceClass"         = "Bronze"
+2026-11-12T15:29:58.4531878Z             "ServiceType"          = "CPS.MSA.24004.001"
+2026-11-12T15:29:58.4532174Z             "SolutionGroup"        = "CAP MCP"
+2026-11-12T15:29:58.4532634Z             "UnitCode"             = "CPS.MSA.24003.001"
+2026-11-12T15:29:58.4532929Z             "Workload"             = "MyTenneT-acc1"
+2026-11-12T15:29:58.4533247Z             "module"               = "azure-kubernetes-service"
+2026-11-12T15:29:58.4533522Z         }
+2026-11-12T15:29:58.4533861Z         [90m# (37 unchanged attributes hidden)[0m[0m
+2026-11-12T15:29:58.4533995Z 
+2026-11-12T15:29:58.4534315Z       [33m~[0m[0m default_node_pool {
+2026-11-12T15:29:58.4534602Z             name                          = "system"
+2026-11-12T15:29:58.4534990Z           [33m~[0m[0m orchestrator_version          = "1.33.13" [33m->[0m[0m "1.34.11"
+2026-11-12T15:29:58.4535427Z           [33m~[0m[0m tags                          = {
+2026-11-12T15:29:58.4535718Z                 "ApplicationName"      = "MyTenneT"
+2026-11-12T15:29:58.4536033Z                 "ApproverContact"      = "coos.walinga@tennet.eu"
+2026-11-12T15:29:58.4536485Z               [33m~[0m[0m "BusinessContact"      = "nick.spierings@tennet.eu" [33m->[0m[0m "carry.block@tennet.eu"
+2026-11-12T15:29:58.4536936Z               [33m~[0m[0m "BusinessLevel"        = "non-critical" [33m->[0m[0m "Non-critical"
+2026-11-12T15:29:58.4537260Z                 "BusinessUnit"         = "BTO-SM-CA"
+2026-11-12T15:29:58.4537635Z               [33m~[0m[0m "CMDB-ID"              = "APP0495" [33m->[0m[0m "BA00098"
+2026-11-12T15:29:58.4537968Z                 "CostCentre"           = "I-1000110-13-07-01"
+2026-11-12T15:29:58.4538257Z                 "CreatedBy"            = "terraform"
+2026-11-12T15:29:58.4538561Z                 "DataClassification"   = "C3 I3 A3"
+2026-11-12T15:29:58.4538853Z                 "DateCreated"          = "01-08-2025"
+2026-11-12T15:29:58.4539159Z                 "DisasterRecovery"     = "false"
+2026-11-12T15:29:58.4539446Z                 "Environment"          = "Acceptance"
+2026-11-12T15:29:58.4539757Z                 "IaaSUpdateSchedule"   = "1month3wednesday"
+2026-11-12T15:29:58.4540137Z               [33m~[0m[0m "OperationsCommitment" = "MCP_STACK" [33m->[0m[0m "MCP_RUN"
+2026-11-12T15:29:58.4540493Z                 "OperationsContact"    = "team.thechallengers@tennet.eu"
+2026-11-12T15:29:58.4540882Z               [33m~[0m[0m "OrgCode"              = "ten" [33m->[0m[0m "Ten"
+2026-11-12T15:29:58.4541197Z                 "Owner"                = "emma.van.der.veen@tennet.eu"
+2026-11-12T15:29:58.4541700Z               [31m-[0m[0m "OwnerEmail"           = "coos.walinga@tennet.eu,nick.spierings@tennet.eu,emma.van.der.veen@tennet.eu" [90m-> null[0m[0m
+2026-11-12T15:29:58.4542237Z                 "RegionName"           = "Netherlands"
+2026-11-12T15:29:58.4542666Z                 "ServiceClass"         = "Bronze"
+2026-11-12T15:29:58.4542985Z                 "ServiceType"          = "CPS.MSA.24004.001"
+2026-11-12T15:29:58.4543317Z                 "SolutionGroup"        = "CAP MCP"
+2026-11-12T15:29:58.4543629Z                 "UnitCode"             = "CPS.MSA.24003.001"
+2026-11-12T15:29:58.4543963Z                 "Workload"             = "MyTenneT-acc1"
+2026-11-12T15:29:58.4544302Z                 "module"               = "azure-kubernetes-service"
+2026-11-12T15:29:58.4544603Z             }
+2026-11-12T15:29:58.4544969Z             [90m# (30 unchanged attributes hidden)[0m[0m
+2026-11-12T15:29:58.4545115Z 
+2026-11-12T15:29:58.4545470Z             [90m# (1 unchanged block hidden)[0m[0m
+2026-11-12T15:29:58.4545769Z         }
+2026-11-12T15:29:58.4545892Z 
+2026-11-12T15:29:58.4546203Z       [33m~[0m[0m identity {
+2026-11-12T15:29:58.4546563Z           [33m~[0m[0m identity_ids = [
+2026-11-12T15:29:58.4547197Z               [31m-[0m[0m "/subscriptions/***/resourceGroups/rg-nl-myte1-acc-euw-aks-001/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-nl-myte1-acc-euw-aks-001",
+2026-11-12T15:29:58.4547674Z             ] -> (known after apply)
+2026-11-12T15:29:58.4548056Z             [90m# (3 unchanged attributes hidden)[0m[0m
+2026-11-12T15:29:58.4548358Z         }
+2026-11-12T15:29:58.4548479Z 
+2026-11-12T15:29:58.4548874Z         [90m# (13 unchanged blocks hidden)[0m[0m
+2026-11-12T15:29:58.4549187Z     }
+2026-11-12T15:29:58.4549311Z 
+2026-11-12T15:29:58.4549718Z [1m  # module.aks.azurerm_kubernetes_cluster_node_pool.nodepool[0][0m will be updated in-place
+2026-11-12T15:29:58.4550202Z [0m  [33m~[0m[0m resource "azurerm_kubernetes_cluster_node_pool" "nodepool" {
+2026-11-12T15:29:58.4550727Z         id                            = "/subscriptions/***/resourceGroups/rg-nl-myte1-acc-euw-aks-001/providers/Microsoft.ContainerService/managedClusters/aks-nl-myte1-acc-euw-aks-001/agentPools/pool001"
+2026-11-12T15:29:58.4551183Z         name                          = "pool001"
+2026-11-12T15:29:58.4551681Z       [33m~[0m[0m orchestrator_version          = "1.33.12" [33m->[0m[0m "1.34.11"
+2026-11-12T15:29:58.4552058Z       [33m~[0m[0m tags                          = {
+2026-11-12T15:29:58.4552482Z             "ApplicationName"      = "MyTenneT"
+2026-11-12T15:29:58.4552812Z             "ApproverContact"      = "coos.walinga@tennet.eu"
+2026-11-12T15:29:58.4553323Z           [33m~[0m[0m "BusinessContact"      = "nick.spierings@tennet.eu" [33m->[0m[0m "carry.block@tennet.eu"
+2026-11-12T15:29:58.4553809Z           [33m~[0m[0m "BusinessLevel"        = "non-critical" [33m->[0m[0m "Non-critical"
+2026-11-12T15:29:58.4554159Z             "BusinessUnit"         = "BTO-SM-CA"
+2026-11-12T15:29:58.4554568Z           [33m~[0m[0m "CMDB-ID"              = "APP0495" [33m->[0m[0m "BA00098"
+2026-11-12T15:29:58.4554910Z             "CostCentre"           = "I-1000110-13-07-01"
+2026-11-12T15:29:58.4555243Z             "CreatedBy"            = "terraform"
+2026-11-12T15:29:58.4555564Z             "DataClassification"   = "C3 I3 A3"
+2026-11-12T15:29:58.4555900Z             "DateCreated"          = "01-08-2025"
+2026-11-12T15:29:58.4556210Z             "DisasterRecovery"     = "false"
+2026-11-12T15:29:58.4556543Z             "Environment"          = "Acceptance"
+2026-11-12T15:29:58.4556864Z             "IaaSUpdateSchedule"   = "1month3wednesday"
+2026-11-12T15:29:58.4557293Z           [33m~[0m[0m "OperationsCommitment" = "MCP_STACK" [33m->[0m[0m "MCP_RUN"
+2026-11-12T15:29:58.4557683Z             "OperationsContact"    = "team.thechallengers@tennet.eu"
+2026-11-12T15:29:58.4558085Z           [33m~[0m[0m "OrgCode"              = "ten" [33m->[0m[0m "Ten"
+2026-11-12T15:29:58.4558440Z             "Owner"                = "emma.van.der.veen@tennet.eu"
+2026-11-12T15:29:58.4558961Z           [31m-[0m[0m "OwnerEmail"           = "coos.walinga@tennet.eu,nick.spierings@tennet.eu,emma.van.der.veen@tennet.eu" [90m-> null[0m[0m
+2026-11-12T15:29:58.4559375Z             "RegionName"           = "Netherlands"
+2026-11-12T15:29:58.4559688Z             "ServiceClass"         = "Bronze"
+2026-11-12T15:29:58.4560019Z             "ServiceType"          = "CPS.MSA.24004.001"
+2026-11-12T15:29:58.4560354Z             "SolutionGroup"        = "CAP MCP"
+2026-11-12T15:29:58.4560671Z             "UnitCode"             = "CPS.MSA.24003.001"
+2026-11-12T15:29:58.4561008Z             "Workload"             = "MyTenneT-acc1"
+2026-11-12T15:29:58.4561330Z             "module"               = "azure-kubernetes-service"
+2026-11-12T15:29:58.4561640Z         }
+2026-11-12T15:29:58.4561986Z         [90m# (31 unchanged attributes hidden)[0m[0m
+2026-11-12T15:29:58.4562146Z 
+2026-11-12T15:29:58.4562577Z         [90m# (1 unchanged block hidden)[0m[0m
+2026-11-12T15:29:58.4562888Z     }
+2026-11-12T15:29:58.4562996Z 
+2026-11-12T15:29:58.4563414Z [1m  # module.aks.azurerm_log_analytics_workspace.law_aks[0][0m will be updated in-place
+2026-11-12T15:29:58.4563884Z [0m  [33m~[0m[0m resource "azurerm_log_analytics_workspace" "law_aks" {
+2026-11-12T15:29:58.4564401Z         id                                      = "/subscriptions/***/resourceGroups/rg-nl-myte1-acc-euw-aks-001/providers/Microsoft.OperationalInsights/workspaces/law-nl-myte1-acc-euw-aks-001"
+2026-11-12T15:29:58.4564896Z         name                                    = "law-nl-myte1-acc-euw-aks-001"
+2026-11-12T15:29:58.4565346Z       [33m~[0m[0m tags                                    = {
+2026-11-12T15:29:58.4565664Z             "ApplicationName"      = "MyTenneT"
+2026-11-12T15:29:58.4566017Z             "ApproverContact"      = "coos.walinga@tennet.eu"
+2026-11-12T15:29:58.4566360Z             "BusinessContact"      = "carry.block@tennet.eu"
+2026-11-12T15:29:58.4566797Z           [33m~[0m[0m "BusinessLevel"        = "non-critical" [33m->[0m[0m "Non-critical"
+2026-11-12T15:29:58.4567148Z             "BusinessUnit"         = "BTO-SM-CA"
+2026-11-12T15:29:58.4567482Z             "CMDB-ID"              = "BA00098"
+2026-11-12T15:29:58.4567795Z             "CostCentre"           = "I-1000110-13-07-01"
+2026-11-12T15:29:58.4568191Z             "CreatedBy"            = "terraform"
+2026-11-12T15:29:58.4568522Z             "DataClassification"   = "C3 I3 A3"
+2026-11-12T15:29:58.4568843Z             "DateCreated"          = "01-08-2025"
+2026-11-12T15:29:58.4569174Z             "DisasterRecovery"     = "false"
+2026-11-12T15:29:58.4569492Z             "Environment"          = "Acceptance"
+2026-11-12T15:29:58.4569832Z             "IaaSUpdateSchedule"   = "1month3wednesday"
+2026-11-12T15:29:58.4570196Z             "OperationsCommitment" = "MCP_RUN"
+2026-11-12T15:29:58.4570552Z             "OperationsContact"    = "team.thechallengers@tennet.eu"
+2026-11-12T15:29:58.4570882Z             "OrgCode"              = "Ten"
+2026-11-12T15:29:58.4571208Z             "Owner"                = "emma.van.der.veen@tennet.eu"
+2026-11-12T15:29:58.4571631Z           [31m-[0m[0m "OwnerEmail"           = "emma.van.der.veen@tennet.eu" [90m-> null[0m[0m
+2026-11-12T15:29:58.4572005Z             "RegionName"           = "Netherlands"
+2026-11-12T15:29:58.4572404Z             "ServiceClass"         = "Bronze"
+2026-11-12T15:29:58.4572747Z             "ServiceType"          = "CPS.MSA.24004.001"
+2026-11-12T15:29:58.4573080Z             "SolutionGroup"        = "CAP MCP"
+2026-11-12T15:29:58.4578088Z             "UnitCode"             = "CPS.MSA.24003.001"
+2026-11-12T15:29:58.4578427Z             "Workload"             = "MyTenneT-acc1"
+2026-11-12T15:29:58.4578752Z             "module"               = "azure-kubernetes-service"
+2026-11-12T15:29:58.4579116Z         }
+2026-11-12T15:29:58.4579486Z         [90m# (16 unchanged attributes hidden)[0m[0m
+2026-11-12T15:29:58.4579805Z     }
+2026-11-12T15:29:58.4579912Z 
+2026-11-12T15:29:58.4580374Z [1m  # module.aks.azurerm_monitor_diagnostic_setting.aks[0m will be updated in-place
+2026-11-12T15:29:58.4580842Z [0m  [33m~[0m[0m resource "azurerm_monitor_diagnostic_setting" "aks" {
+2026-11-12T15:29:58.4581375Z         id                             = "/subscriptions/***/resourceGroups/rg-nl-myte1-acc-euw-aks-001/providers/Microsoft.ContainerService/managedClusters/aks-nl-myte1-acc-euw-aks-001|aks-logging"
+2026-11-12T15:29:58.4581835Z         name                           = "aks-logging"
+2026-11-12T15:29:58.4582215Z         [90m# (5 unchanged attributes hidden)[0m[0m
+2026-11-12T15:29:58.4582477Z 
+2026-11-12T15:29:58.4582825Z       [31m-[0m[0m enabled_log {
+2026-11-12T15:29:58.4583220Z           [31m-[0m[0m category       = "kube-apiserver" [90m-> null[0m[0m
+2026-11-12T15:29:58.4583628Z             [90m# (1 unchanged attribute hidden)[0m[0m
+2026-11-12T15:29:58.4583773Z 
+2026-11-12T15:29:58.4584115Z           [31m-[0m[0m retention_policy {
+2026-11-12T15:29:58.4584479Z               [31m-[0m[0m days    = 0 [90m-> null[0m[0m
+2026-11-12T15:29:58.4584874Z               [31m-[0m[0m enabled = false [90m-> null[0m[0m
+2026-11-12T15:29:58.4585190Z             }
+2026-11-12T15:29:58.4585457Z         }
+2026-11-12T15:29:58.4585791Z       [31m-[0m[0m enabled_log {
+2026-11-12T15:29:58.4586175Z           [31m-[0m[0m category       = "kube-audit" [90m-> null[0m[0m
+2026-11-12T15:29:58.4586624Z             [90m# (1 unchanged attribute hidden)[0m[0m
+2026-11-12T15:29:58.4586769Z 
+2026-11-12T15:29:58.4587106Z           [31m-[0m[0m retention_policy {
+2026-11-12T15:29:58.4587545Z               [31m-[0m[0m days    = 0 [90m-> null[0m[0m
+2026-11-12T15:29:58.4587936Z               [31m-[0m[0m enabled = false [90m-> null[0m[0m
+2026-11-12T15:29:58.4588237Z             }
+2026-11-12T15:29:58.4588518Z         }
+2026-11-12T15:29:58.4588831Z       [31m-[0m[0m enabled_log {
+2026-11-12T15:29:58.4589240Z           [31m-[0m[0m category       = "kube-audit-admin" [90m-> null[0m[0m
+2026-11-12T15:29:58.4589742Z             [90m# (1 unchanged attribute hidden)[0m[0m
+2026-11-12T15:29:58.4589876Z 
+2026-11-12T15:29:58.4590370Z           [31m-[0m[0m retention_policy {
+2026-11-12T15:29:58.4590735Z               [31m-[0m[0m days    = 0 [90m-> null[0m[0m
+2026-11-12T15:29:58.4591188Z               [31m-[0m[0m enabled = false [90m-> null[0m[0m
+2026-11-12T15:29:58.4591488Z             }
+2026-11-12T15:29:58.4591772Z         }
+2026-11-12T15:29:58.4592087Z       [32m+[0m[0m enabled_log {
+2026-11-12T15:29:58.4592599Z           [32m+[0m[0m category_group = "allLogs"
+2026-11-12T15:29:58.4592981Z             [90m# (1 unchanged attribute hidden)[0m[0m
+2026-11-12T15:29:58.4593293Z         }
+2026-11-12T15:29:58.4593604Z       [32m+[0m[0m enabled_log {
+2026-11-12T15:29:58.4593979Z           [32m+[0m[0m category_group = "audit"
+2026-11-12T15:29:58.4594351Z             [90m# (1 unchanged attribute hidden)[0m[0m
+2026-11-12T15:29:58.4594673Z         }
+2026-11-12T15:29:58.4594795Z 
+2026-11-12T15:29:58.4595128Z         [90m# (2 unchanged blocks hidden)[0m[0m
+2026-11-12T15:29:58.4595440Z     }
+2026-11-12T15:29:58.4595549Z 
+2026-11-12T15:29:58.4595967Z [1m  # module.aks.azurerm_private_endpoint.kv_private_endpoint[0][0m will be updated in-place
+2026-11-12T15:29:58.4596432Z [0m  [33m~[0m[0m resource "azurerm_private_endpoint" "kv_private_endpoint" {
+2026-11-12T15:29:58.4596969Z         id                            = "/subscriptions/***/resourceGroups/rg-nl-myte1-acc-euw-aks-001/providers/Microsoft.Network/privateEndpoints/pep-vault-nl-myte1-acc-euw-aks-001"
+2026-11-12T15:29:58.4597432Z         name                          = "pep-vault-nl-myte1-acc-euw-aks-001"
+2026-11-12T15:29:58.4597799Z       [33m~[0m[0m tags                          = {
+2026-11-12T15:29:58.4598129Z             "ApplicationName"      = "MyTenneT"
+2026-11-12T15:29:58.4598498Z             "ApproverContact"      = "coos.walinga@tennet.eu"
+2026-11-12T15:29:58.4598964Z           [33m~[0m[0m "BusinessContact"      = "carry.block@tennet.eu " [33m->[0m[0m "carry.block@tennet.eu"
+2026-11-12T15:29:58.4599437Z           [33m~[0m[0m "BusinessLevel"        = "non-critical" [33m->[0m[0m "Non-critical"
+2026-11-12T15:29:58.4599785Z             "BusinessUnit"         = "BTO-SM-CA"
+2026-11-12T15:29:58.4600113Z             "CMDB-ID"              = "BA00098"
+2026-11-12T15:29:58.4600429Z             "CostCentre"           = "I-1000110-13-07-01"
+2026-11-12T15:29:58.4600766Z             "CreatedBy"            = "terraform"
+2026-11-12T15:29:58.4601086Z             "DataClassification"   = "C3 I3 A3"
+2026-11-12T15:29:58.4601425Z             "DateCreated"          = "01-08-2025"
+2026-11-12T15:29:58.4601734Z             "DisasterRecovery"     = "false"
+2026-11-12T15:29:58.4602062Z             "Environment"          = "Acceptance"
+2026-11-12T15:29:58.4602479Z             "IaaSUpdateSchedule"   = "1month3wednesday"
+2026-11-12T15:29:58.4602829Z             "OperationsCommitment" = "MCP_RUN"
+2026-11-12T15:29:58.4603184Z             "OperationsContact"    = "team.thechallengers@tennet.eu"
+2026-11-12T15:29:58.4603520Z             "OrgCode"              = "Ten"
+2026-11-12T15:29:58.4603893Z             "Owner"                = "emma.van.der.veen@tennet.eu"
+2026-11-12T15:29:58.4604320Z           [31m-[0m[0m "OwnerEmail"           = "emma.van.der.veen@tennet.eu" [90m-> null[0m[0m
+2026-11-12T15:29:58.4604689Z             "RegionName"           = "Netherlands"
+2026-11-12T15:29:58.4604997Z             "ServiceClass"         = "Bronze"
+2026-11-12T15:29:58.4605414Z             "ServiceType"          = "CPS.MSA.24004.001"
+2026-11-12T15:29:58.4605792Z             "SolutionGroup"        = "CAP MCP"
+2026-11-12T15:29:58.4606125Z             "UnitCode"             = "CPS.MSA.24003.001"
+2026-11-12T15:29:58.4606456Z             "Workload"             = "MyTenneT-acc1"
+2026-11-12T15:29:58.4606780Z             "module"               = "azure-kubernetes-service"
+2026-11-12T15:29:58.4607095Z         }
+2026-11-12T15:29:58.4607438Z         [90m# (8 unchanged attributes hidden)[0m[0m
+2026-11-12T15:29:58.4607597Z 
+2026-11-12T15:29:58.4607931Z         [90m# (2 unchanged blocks hidden)[0m[0m
+2026-11-12T15:29:58.4608238Z     }
+2026-11-12T15:29:58.4608345Z 
+2026-11-12T15:29:58.4608738Z [1m  # module.aks.azurerm_public_ip.appgw_pip[0m will be updated in-place
+2026-11-12T15:29:58.4609250Z [0m  [33m~[0m[0m resource "azurerm_public_ip" "appgw_pip" {
+2026-11-12T15:29:58.4609800Z         id                      = "/subscriptions/***/resourceGroups/rg-nl-myte1-acc-euw-aks-001/providers/Microsoft.Network/publicIPAddresses/pip-appgw-nl-myte1-acc-euw-aks-001"
+2026-11-12T15:29:58.4610361Z         name                    = "pip-appgw-nl-myte1-acc-euw-aks-001"
+2026-11-12T15:29:58.4610727Z       [33m~[0m[0m tags                    = {
+2026-11-12T15:29:58.4611056Z             "ApplicationName"      = "MyTenneT"
+2026-11-12T15:29:58.4611380Z             "ApproverContact"      = "coos.walinga@tennet.eu"
+2026-11-12T15:29:58.4611838Z           [33m~[0m[0m "BusinessContact"      = "carry.block@tennet.eu " [33m->[0m[0m "carry.block@tennet.eu"
+2026-11-12T15:29:58.4612388Z           [33m~[0m[0m "BusinessLevel"        = "non-critical" [33m->[0m[0m "Non-critical"
+2026-11-12T15:29:58.4612759Z             "BusinessUnit"         = "BTO-SM-CA"
+2026-11-12T15:29:58.4613082Z             "CMDB-ID"              = "BA00098"
+2026-11-12T15:29:58.4613395Z             "CostCentre"           = "I-1000110-13-07-01"
+2026-11-12T15:29:58.4613730Z             "CreatedBy"            = "terraform"
+2026-11-12T15:29:58.4614043Z             "DataClassification"   = "C3 I3 A3"
+2026-11-12T15:29:58.4614380Z             "DateCreated"          = "01-08-2025"
+2026-11-12T15:29:58.4614685Z             "DisasterRecovery"     = "false"
+2026-11-12T15:29:58.4615017Z             "Environment"          = "Acceptance"
+2026-11-12T15:29:58.4615414Z             "IaaSUpdateSchedule"   = "1month3wednesday"
+2026-11-12T15:29:58.4615744Z             "OperationsCommitment" = "MCP_RUN"
+2026-11-12T15:29:58.4616096Z             "OperationsContact"    = "team.thechallengers@tennet.eu"
+2026-11-12T15:29:58.4616425Z             "OrgCode"              = "Ten"
+2026-11-12T15:29:58.4616753Z             "Owner"                = "emma.van.der.veen@tennet.eu"
+2026-11-12T15:29:58.4617182Z           [31m-[0m[0m "OwnerEmail"           = "emma.van.der.veen@tennet.eu" [90m-> null[0m[0m
+2026-11-12T15:29:58.4617552Z             "RegionName"           = "Netherlands"
+2026-11-12T15:29:58.4617857Z             "ServiceClass"         = "Bronze"
+2026-11-12T15:29:58.4618189Z             "ServiceType"          = "CPS.MSA.24004.001"
+2026-11-12T15:29:58.4618525Z             "SolutionGroup"        = "CAP MCP"
+2026-11-12T15:29:58.4618841Z             "UnitCode"             = "CPS.MSA.24003.001"
+2026-11-12T15:29:58.4619176Z             "Workload"             = "MyTenneT-acc1"
+2026-11-12T15:29:58.4619499Z             "module"               = "azure-kubernetes-service"
+2026-11-12T15:29:58.4619811Z         }
+2026-11-12T15:29:58.4620153Z         [90m# (16 unchanged attributes hidden)[0m[0m
+2026-11-12T15:29:58.4620466Z     }
+2026-11-12T15:29:58.4620575Z 
+2026-11-12T15:29:58.4621015Z [1m  # module.aks.azurerm_resource_group.aks_resources[0][0m will be updated in-place
+2026-11-12T15:29:58.4621461Z [0m  [33m~[0m[0m resource "azurerm_resource_group" "aks_resources" {
+2026-11-12T15:29:58.4621907Z         id         = "/subscriptions/***/resourceGroups/rg-nl-myte1-acc-euw-aks-001"
+2026-11-12T15:29:58.4622369Z         name       = "rg-nl-myte1-acc-euw-aks-001"
+2026-11-12T15:29:58.4622742Z       [33m~[0m[0m tags       = {
+2026-11-12T15:29:58.4623142Z             "ApplicationName"      = "MyTenneT"
+2026-11-12T15:29:58.4623472Z             "ApproverContact"      = "coos.walinga@tennet.eu"
+2026-11-12T15:29:58.4623829Z             "BusinessContact"      = "carry.block@tennet.eu"
+2026-11-12T15:29:58.4624253Z           [33m~[0m[0m "BusinessLevel"        = "non-critical" [33m->[0m[0m "Non-critical"
+2026-11-12T15:29:58.4624622Z             "BusinessUnit"         = "BTO-SM-CA"
+2026-11-12T15:29:58.4624951Z             "CMDB-ID"              = "BA00098"
+2026-11-12T15:29:58.4625265Z             "CostCentre"           = "I-1000110-13-07-01"
+2026-11-12T15:29:58.4625600Z             "CreatedBy"            = "terraform"
+2026-11-12T15:29:58.4625968Z             "DataClassification"   = "C3 I3 A3"
+2026-11-12T15:29:58.4626300Z             "DateCreated"          = "01-08-2025"
+2026-11-12T15:29:58.4626640Z             "DisasterRecovery"     = "false"
+2026-11-12T15:29:58.4626971Z             "Environment"          = "Acceptance"
+2026-11-12T15:29:58.4627294Z             "IaaSUpdateSchedule"   = "1month3wednesday"
+2026-11-12T15:29:58.4627639Z             "OperationsCommitment" = "MCP_RUN"
+2026-11-12T15:29:58.4627982Z             "OperationsContact"    = "team.thechallengers@tennet.eu"
+2026-11-12T15:29:58.4628328Z             "OrgCode"              = "Ten"
+2026-11-12T15:29:58.4628655Z             "Owner"                = "emma.van.der.veen@tennet.eu"
+2026-11-12T15:29:58.4629079Z           [31m-[0m[0m "OwnerEmail"           = "emma.van.der.veen@tennet.eu" [90m-> null[0m[0m
+2026-11-12T15:29:58.4629445Z             "RegionName"           = "Netherlands"
+2026-11-12T15:29:58.4629750Z             "ServiceClass"         = "Bronze"
+2026-11-12T15:29:58.4630083Z             "ServiceType"          = "CPS.MSA.24004.001"
+2026-11-12T15:29:58.4630404Z             "SolutionGroup"        = "CAP MCP"
+2026-11-12T15:29:58.4630736Z             "UnitCode"             = "CPS.MSA.24003.001"
+2026-11-12T15:29:58.4631050Z             "Workload"             = "MyTenneT-acc1"
+2026-11-12T15:29:58.4631395Z             "module"               = "azure-kubernetes-service"
+2026-11-12T15:29:58.4631695Z         }
+2026-11-12T15:29:58.4632084Z         [90m# (2 unchanged attributes hidden)[0m[0m
+2026-11-12T15:29:58.4632500Z     }
+2026-11-12T15:29:58.4632608Z 
+2026-11-12T15:29:58.4633055Z [1m  # module.aks.azurerm_role_assignment.aks_ingress_uaid_permissions_on_vnet[0m will be created
+2026-11-12T15:29:58.4633544Z [0m  [32m+[0m[0m resource "azurerm_role_assignment" "aks_ingress_uaid_permissions_on_vnet" {
+2026-11-12T15:29:58.4633999Z       [32m+[0m[0m condition_version                = (known after apply)
+2026-11-12T15:29:58.4634399Z       [32m+[0m[0m id                               = (known after apply)
+2026-11-12T15:29:58.4634794Z       [32m+[0m[0m name                             = (known after apply)
+2026-11-12T15:29:58.4635181Z       [32m+[0m[0m principal_id                     = (known after apply)
+2026-11-12T15:29:58.4635590Z       [32m+[0m[0m principal_type                   = (known after apply)
+2026-11-12T15:29:58.4636007Z       [32m+[0m[0m role_definition_id               = (known after apply)
+2026-11-12T15:29:58.4636408Z       [32m+[0m[0m role_definition_name             = "Contributor"
+2026-11-12T15:29:58.4637064Z       [32m+[0m[0m scope                            = "/subscriptions/***/resourceGroups/rg-nl-cf-myte1-acc-euw-yjjlh-001/providers/Microsoft.Network/virtualNetworks/vnet-nl-cf-myte1-acc-euw-yjjlh-001"
+2026-11-12T15:29:58.4637617Z       [32m+[0m[0m skip_service_principal_aad_check = (known after apply)
+2026-11-12T15:29:58.4637933Z     }
+2026-11-12T15:29:58.4638093Z 
+2026-11-12T15:29:58.4638521Z [1m  # module.aks.azurerm_role_assignment.aks_ingress_uaid_reader_on_apgw_resource_group[0m will be created
+2026-11-12T15:29:58.4639059Z [0m  [32m+[0m[0m resource "azurerm_role_assignment" "aks_ingress_uaid_reader_on_apgw_resource_group" {
+2026-11-12T15:29:58.4639592Z       [32m+[0m[0m condition_version                = (known after apply)
+2026-11-12T15:29:58.4640034Z       [32m+[0m[0m id                               = (known after apply)
+2026-11-12T15:29:58.4640404Z       [32m+[0m[0m name                             = (known after apply)
+2026-11-12T15:29:58.4640761Z       [32m+[0m[0m principal_id                     = (known after apply)
+2026-11-12T15:29:58.4641144Z       [32m+[0m[0m principal_type                   = (known after apply)
+2026-11-12T15:29:58.4641516Z       [32m+[0m[0m role_definition_id               = (known after apply)
+2026-11-12T15:29:58.4641903Z       [32m+[0m[0m role_definition_name             = "Contributor"
+2026-11-12T15:29:58.4642480Z       [32m+[0m[0m scope                            = "/subscriptions/***/resourceGroups/rg-nl-myte1-acc-euw-aks-001"
+2026-11-12T15:29:58.4642980Z       [32m+[0m[0m skip_service_principal_aad_check = (known after apply)
+2026-11-12T15:29:58.4643297Z     }
+2026-11-12T15:29:58.4643397Z 
+2026-11-12T15:29:58.4643804Z [1m  # module.aks.azurerm_role_assignment.aks_private_dns_zone_contributor[0m must be [1m[31mreplaced[0m
+2026-11-12T15:29:58.4644302Z [0m[31m-[0m/[32m+[0m[0m resource "azurerm_role_assignment" "aks_private_dns_zone_contributor" {
+2026-11-12T15:29:58.4644735Z       [32m+[0m[0m condition_version                      = (known after apply)
+2026-11-12T15:29:58.4645472Z       [33m~[0m[0m id                                     = "/subscriptions/3adf4f81-252a-4312-b39a-67957dcb0097/resourceGroups/rg-cf-dns-prd-euw-yjjlh-001/providers/Microsoft.Network/privateDnsZones/privatelink.westeurope.azmk8s.io/providers/Microsoft.Authorization/roleAssignments/0a32987b-2590-876b-11ae-3ff4d90e8c91" -> (known after apply)
+2026-11-12T15:29:58.4646100Z       [33m~[0m[0m name                                   = "0a32987b-2590-876b-11ae-3ff4d90e8c91" -> (known after apply)
+2026-11-12T15:29:58.4646651Z       [33m~[0m[0m principal_id                           = "b5def150-3244-4cc3-82f6-20faa31a0439" [31m# forces replacement[0m[0m -> (known after apply) [31m# forces replacement[0m[0m
+2026-11-12T15:29:58.4647141Z       [33m~[0m[0m principal_type                         = "ServicePrincipal" -> (known after apply)
+2026-11-12T15:29:58.4647729Z       [33m~[0m[0m role_definition_id                     = "/subscriptions/3adf4f81-252a-4312-b39a-67957dcb0097/providers/Microsoft.Authorization/roleDefinitions/b12aa53e-6015-4669-85d0-8515ebb3ae7f" -> (known after apply)
+2026-11-12T15:29:58.4648264Z       [32m+[0m[0m skip_service_principal_aad_check       = (known after apply)
+2026-11-12T15:29:58.4648651Z         [90m# (5 unchanged attributes hidden)[0m[0m
+2026-11-12T15:29:58.4648931Z     }
+2026-11-12T15:29:58.4649049Z 
+2026-11-12T15:29:58.4649433Z [1m  # module.aks.azurerm_role_assignment.aks_vnet_role_assignments[0m must be [1m[31mreplaced[0m
+2026-11-12T15:29:58.4649898Z [0m[31m-[0m/[32m+[0m[0m resource "azurerm_role_assignment" "aks_vnet_role_assignments" {
+2026-11-12T15:29:58.4650547Z       [32m+[0m[0m condition_version                      = (known after apply)
+2026-11-12T15:29:58.4651363Z       [33m~[0m[0m id                                     = "/subscriptions/***/resourceGroups/rg-nl-cf-myte1-acc-euw-yjjlh-001/providers/Microsoft.Network/virtualNetworks/vnet-nl-cf-myte1-acc-euw-yjjlh-001/providers/Microsoft.Authorization/roleAssignments/cfc051ca-1e3c-26dd-ca66-82b7ec5cc957" -> (known after apply)
+2026-11-12T15:29:58.4652033Z       [33m~[0m[0m name                                   = "cfc051ca-1e3c-26dd-ca66-82b7ec5cc957" -> (known after apply)
+2026-11-12T15:29:58.4652724Z       [33m~[0m[0m principal_id                           = "b5def150-3244-4cc3-82f6-20faa31a0439" [31m# forces replacement[0m[0m -> (known after apply) [31m# forces replacement[0m[0m
+2026-11-12T15:29:58.4653249Z       [33m~[0m[0m principal_type                         = "ServicePrincipal" -> (known after apply)
+2026-11-12T15:29:58.4653911Z       [33m~[0m[0m role_definition_id                     = "/subscriptions/***/providers/Microsoft.Authorization/roleDefinitions/4d97b98b-1d4f-4787-a291-c67834d212e7" -> (known after apply)
+2026-11-12T15:29:58.4654534Z       [32m+[0m[0m skip_service_principal_aad_check       = (known after apply)
+2026-11-12T15:29:58.4654958Z         [90m# (5 unchanged attributes hidden)[0m[0m
+2026-11-12T15:29:58.4655263Z     }
+2026-11-12T15:29:58.4655390Z 
+2026-11-12T15:29:58.4655819Z [1m  # module.aks.azurerm_role_assignment.role_assignment_certificates_appgw[0m must be [1m[31mreplaced[0m
+2026-11-12T15:29:58.4656443Z [0m[31m-[0m/[32m+[0m[0m resource "azurerm_role_assignment" "role_assignment_certificates_appgw" {
+2026-11-12T15:29:58.4656857Z       [32m+[0m[0m condition_version                      = (known after apply)
+2026-11-12T15:29:58.4657618Z       [33m~[0m[0m id                                     = "/subscriptions/***/resourceGroups/rg-nl-myte1-acc-euw-aks-001/providers/Microsoft.KeyVault/vaults/kvnlmyte1accuwaks001/providers/Microsoft.Authorization/roleAssignments/a42a7eec-e916-ddaa-997d-44fcffca06e0" -> (known after apply)
+2026-11-12T15:29:58.4658296Z       [33m~[0m[0m name                                   = "a42a7eec-e916-ddaa-997d-44fcffca06e0" -> (known after apply)
+2026-11-12T15:29:58.4658843Z       [33m~[0m[0m principal_id                           = "283f393d-ab03-42aa-bd6a-6a3d3b0eee79" [31m# forces replacement[0m[0m -> (known after apply) [31m# forces replacement[0m[0m
+2026-11-12T15:29:58.4659318Z       [33m~[0m[0m principal_type                         = "ServicePrincipal" -> (known after apply)
+2026-11-12T15:29:58.4659929Z       [33m~[0m[0m role_definition_id                     = "/subscriptions/***/providers/Microsoft.Authorization/roleDefinitions/a4417e6f-fecd-4de8-b567-7b0420556985" -> (known after apply)
+2026-11-12T15:29:58.4660429Z       [32m+[0m[0m skip_service_principal_aad_check       = (known after apply)
+2026-11-12T15:29:58.4660803Z         [90m# (5 unchanged attributes hidden)[0m[0m
+2026-11-12T15:29:58.4661097Z     }
+2026-11-12T15:29:58.4661216Z 
+2026-11-12T15:29:58.4661773Z [1m  # module.aks.azurerm_role_assignment.role_assignment_secrets_appgw[0m must be [1m[31mreplaced[0m
+2026-11-12T15:29:58.4662363Z [0m[31m-[0m/[32m+[0m[0m resource "azurerm_role_assignment" "role_assignment_secrets_appgw" {
+2026-11-12T15:29:58.4662839Z       [32m+[0m[0m condition_version                      = (known after apply)
+2026-11-12T15:29:58.4663598Z       [33m~[0m[0m id                                     = "/subscriptions/***/resourceGroups/rg-nl-myte1-acc-euw-aks-001/providers/Microsoft.KeyVault/vaults/kvnlmyte1accuwaks001/providers/Microsoft.Authorization/roleAssignments/8a0ad62e-60ce-5554-fc89-9ca6c3d47bd6" -> (known after apply)
+2026-11-12T15:29:58.4664281Z       [33m~[0m[0m name                                   = "8a0ad62e-60ce-5554-fc89-9ca6c3d47bd6" -> (known after apply)
+2026-11-12T15:29:58.4664862Z       [33m~[0m[0m principal_id                           = "283f393d-ab03-42aa-bd6a-6a3d3b0eee79" [31m# forces replacement[0m[0m -> (known after apply) [31m# forces replacement[0m[0m
+2026-11-12T15:29:58.4665374Z       [33m~[0m[0m principal_type                         = "ServicePrincipal" -> (known after apply)
+2026-11-12T15:29:58.4666027Z       [33m~[0m[0m role_definition_id                     = "/subscriptions/***/providers/Microsoft.Authorization/roleDefinitions/4633458b-17de-408a-b874-0445c86b69e6" -> (known after apply)
+2026-11-12T15:29:58.4666554Z       [32m+[0m[0m skip_service_principal_aad_check       = (known after apply)
+2026-11-12T15:29:58.4666956Z         [90m# (5 unchanged attributes hidden)[0m[0m
+2026-11-12T15:29:58.4667274Z     }
+2026-11-12T15:29:58.4667382Z 
+2026-11-12T15:29:58.4667799Z [1m  # module.aks.azurerm_role_assignment.role_assignments[0m must be [1m[31mreplaced[0m
+2026-11-12T15:29:58.4668260Z [0m[31m-[0m/[32m+[0m[0m resource "azurerm_role_assignment" "role_assignments" {
+2026-11-12T15:29:58.4668702Z       [32m+[0m[0m condition_version                      = (known after apply)
+2026-11-12T15:29:58.4669460Z       [33m~[0m[0m id                                     = "/subscriptions/***/resourceGroups/rg-nl-myte1-acc-euw-aks-001/providers/Microsoft.KeyVault/vaults/kvnlmyte1accuwaks001/providers/Microsoft.Authorization/roleAssignments/7fb007ef-3ff3-6fa8-2c5d-1fdc21b6bda7" -> (known after apply)
+2026-11-12T15:29:58.4670158Z       [33m~[0m[0m name                                   = "7fb007ef-3ff3-6fa8-2c5d-1fdc21b6bda7" -> (known after apply)
+2026-11-12T15:29:58.4670726Z       [33m~[0m[0m principal_id                           = "b5def150-3244-4cc3-82f6-20faa31a0439" [31m# forces replacement[0m[0m -> (known after apply) [31m# forces replacement[0m[0m
+2026-11-12T15:29:58.4671345Z       [33m~[0m[0m principal_type                         = "ServicePrincipal" -> (known after apply)
+2026-11-12T15:29:58.4671997Z       [33m~[0m[0m role_definition_id                     = "/subscriptions/***/providers/Microsoft.Authorization/roleDefinitions/4633458b-17de-408a-b874-0445c86b69e6" -> (known after apply)
+2026-11-12T15:29:58.4672632Z       [32m+[0m[0m skip_service_principal_aad_check       = (known after apply)
+2026-11-12T15:29:58.4673039Z         [90m# (5 unchanged attributes hidden)[0m[0m
+2026-11-12T15:29:58.4673350Z     }
+2026-11-12T15:29:58.4673456Z 
+2026-11-12T15:29:58.4673893Z [1m  # module.aks.azurerm_user_assigned_identity.aks_user_assigned_identity[0m must be [1m[31mreplaced[0m
+2026-11-12T15:29:58.4674389Z [0m[31m-[0m/[32m+[0m[0m resource "azurerm_user_assigned_identity" "aks_user_assigned_identity" {
+2026-11-12T15:29:58.4674894Z       [33m~[0m[0m client_id           = "0c324350-8b4a-492c-9a4d-5fcb7a260969" -> (known after apply)
+2026-11-12T15:29:58.4675609Z       [33m~[0m[0m id                  = "/subscriptions/***/resourceGroups/rg-nl-myte1-acc-euw-aks-001/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-nl-myte1-acc-euw-aks-001" -> (known after apply)
+2026-11-12T15:29:58.4676251Z       [33m~[0m[0m name                = "id-nl-myte1-acc-euw-aks-001" [33m->[0m[0m "mi-nl-myte1-acc-euw-aks-001" [31m# forces replacement[0m[0m
+2026-11-12T15:29:58.4676765Z       [33m~[0m[0m principal_id        = "b5def150-3244-4cc3-82f6-20faa31a0439" -> (known after apply)
+2026-11-12T15:29:58.4677173Z       [33m~[0m[0m tags                = {
+2026-11-12T15:29:58.4677519Z             "ApplicationName"      = "MyTenneT"
+2026-11-12T15:29:58.4677861Z             "ApproverContact"      = "coos.walinga@tennet.eu"
+2026-11-12T15:29:58.4678200Z             "BusinessContact"      = "carry.block@tennet.eu"
+2026-11-12T15:29:58.4678638Z           [33m~[0m[0m "BusinessLevel"        = "non-critical" [33m->[0m[0m "Non-critical"
+2026-11-12T15:29:58.4679048Z             "BusinessUnit"         = "BTO-SM-CA"
+2026-11-12T15:29:58.4679359Z             "CMDB-ID"              = "BA00098"
+2026-11-12T15:29:58.4679686Z             "CostCentre"           = "I-1000110-13-07-01"
+2026-11-12T15:29:58.4680003Z             "CreatedBy"            = "terraform"
+2026-11-12T15:29:58.4680329Z             "DataClassification"   = "C3 I3 A3"
+2026-11-12T15:29:58.4680649Z             "DateCreated"          = "01-08-2025"
+2026-11-12T15:29:58.4680977Z             "DisasterRecovery"     = "false"
+2026-11-12T15:29:58.4681395Z             "Environment"          = "Acceptance"
+2026-11-12T15:29:58.4681711Z             "IaaSUpdateSchedule"   = "1month3wednesday"
+2026-11-12T15:29:58.4682014Z             "OperationsCommitment" = "MCP_RUN"
+2026-11-12T15:29:58.4682418Z             "OperationsContact"    = "team.thechallengers@tennet.eu"
+2026-11-12T15:29:58.4682782Z             "OrgCode"              = "Ten"
+2026-11-12T15:29:58.4683092Z             "Owner"                = "emma.van.der.veen@tennet.eu"
+2026-11-12T15:29:58.4683512Z           [31m-[0m[0m "OwnerEmail"           = "emma.van.der.veen@tennet.eu" [90m-> null[0m[0m
+2026-11-12T15:29:58.4683839Z             "RegionName"           = "Netherlands"
+2026-11-12T15:29:58.4684143Z             "ServiceClass"         = "Bronze"
+2026-11-12T15:29:58.4684439Z             "ServiceType"          = "CPS.MSA.24004.001"
+2026-11-12T15:29:58.4684805Z             "SolutionGroup"        = "CAP MCP"
+2026-11-12T15:29:58.4685101Z             "UnitCode"             = "CPS.MSA.24003.001"
+2026-11-12T15:29:58.4685413Z             "Workload"             = "MyTenneT-acc1"
+2026-11-12T15:29:58.4685714Z             "module"               = "azure-kubernetes-service"
+2026-11-12T15:29:58.4686008Z         }
+2026-11-12T15:29:58.4686415Z       [33m~[0m[0m tenant_id           = "***" -> (known after apply)
+2026-11-12T15:29:58.4686776Z         [90m# (3 unchanged attributes hidden)[0m[0m
+2026-11-12T15:29:58.4687064Z     }
+2026-11-12T15:29:58.4687165Z 
+2026-11-12T15:29:58.4687625Z [1m  # module.aks.azurerm_user_assigned_identity.appgw_user_assigned_identity[0m must be [1m[31mreplaced[0m
+2026-11-12T15:29:58.4688097Z [0m[31m-[0m/[32m+[0m[0m resource "azurerm_user_assigned_identity" "appgw_user_assigned_identity" {
+2026-11-12T15:29:58.4688772Z       [33m~[0m[0m client_id           = "da625ce4-b473-4fbd-ad7b-b9a58c5642be" -> (known after apply)
+2026-11-12T15:29:58.4689501Z       [33m~[0m[0m id                  = "/subscriptions/***/resourceGroups/rg-nl-myte1-acc-euw-aks-001/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-appgw-nl-myte1-acc-euw-aks-001" -> (known after apply)
+2026-11-12T15:29:58.4690166Z       [33m~[0m[0m name                = "id-appgw-nl-myte1-acc-euw-aks-001" [33m->[0m[0m "mi-appgw-nl-myte1-acc-euw-aks-001" [31m# forces replacement[0m[0m
+2026-11-12T15:29:58.4690690Z       [33m~[0m[0m principal_id        = "283f393d-ab03-42aa-bd6a-6a3d3b0eee79" -> (known after apply)
+2026-11-12T15:29:58.4691100Z       [33m~[0m[0m tags                = {
+2026-11-12T15:29:58.4691414Z             "ApplicationName"      = "MyTenneT"
+2026-11-12T15:29:58.4691759Z             "ApproverContact"      = "coos.walinga@tennet.eu"
+2026-11-12T15:29:58.4692099Z             "BusinessContact"      = "carry.block@tennet.eu"
+2026-11-12T15:29:58.4692637Z           [33m~[0m[0m "BusinessLevel"        = "non-critical" [33m->[0m[0m "Non-critical"
+2026-11-12T15:29:58.4693009Z             "BusinessUnit"         = "BTO-SM-CA"
+2026-11-12T15:29:58.4693317Z             "CMDB-ID"              = "BA00098"
+2026-11-12T15:29:58.4693656Z             "CostCentre"           = "I-1000110-13-07-01"
+2026-11-12T15:29:58.4693980Z             "CreatedBy"            = "terraform"
+2026-11-12T15:29:58.4694312Z             "DataClassification"   = "C3 I3 A3"
+2026-11-12T15:29:58.4694664Z             "DateCreated"          = "01-08-2025"
+2026-11-12T15:29:58.4694988Z             "DisasterRecovery"     = "false"
+2026-11-12T15:29:58.4695298Z             "Environment"          = "Acceptance"
+2026-11-12T15:29:58.4695637Z             "IaaSUpdateSchedule"   = "1month3wednesday"
+2026-11-12T15:29:58.4695964Z             "OperationsCommitment" = "MCP_RUN"
+2026-11-12T15:29:58.4696316Z             "OperationsContact"    = "team.thechallengers@tennet.eu"
+2026-11-12T15:29:58.4696658Z             "OrgCode"              = "Ten"
+2026-11-12T15:29:58.4696972Z             "Owner"                = "emma.van.der.veen@tennet.eu"
+2026-11-12T15:29:58.4697406Z           [31m-[0m[0m "OwnerEmail"           = "emma.van.der.veen@tennet.eu" [90m-> null[0m[0m
+2026-11-12T15:29:58.4697756Z             "RegionName"           = "Netherlands"
+2026-11-12T15:29:58.4698082Z             "ServiceClass"         = "Bronze"
+2026-11-12T15:29:58.4698399Z             "ServiceType"          = "CPS.MSA.24004.001"
+2026-11-12T15:29:58.4698736Z             "SolutionGroup"        = "CAP MCP"
+2026-11-12T15:29:58.4699049Z             "UnitCode"             = "CPS.MSA.24003.001"
+2026-11-12T15:29:58.4699386Z             "Workload"             = "MyTenneT-acc1"
+2026-11-12T15:29:58.4699762Z             "module"               = "azure-kubernetes-service"
+2026-11-12T15:29:58.4700060Z         }
+2026-11-12T15:29:58.4700495Z       [33m~[0m[0m tenant_id           = "***" -> (known after apply)
+2026-11-12T15:29:58.4700883Z         [90m# (3 unchanged attributes hidden)[0m[0m
+2026-11-12T15:29:58.4701253Z     }
+2026-11-12T15:29:58.4701361Z 
+2026-11-12T15:29:58.4701814Z [1m  # module.aks.azurerm_web_application_firewall_policy.wafpolicy-default-aks[0m will be updated in-place
+2026-11-12T15:29:58.4702392Z [0m  [33m~[0m[0m resource "azurerm_web_application_firewall_policy" "wafpolicy-default-aks" {
+2026-11-12T15:29:58.4702996Z         id                  = "/subscriptions/***/resourceGroups/rg-nl-myte1-acc-euw-aks-001/providers/Microsoft.Network/applicationGatewayWebApplicationFirewallPolicies/waf-default-appgw-nl-myte1-acc-euw-aks-001"
+2026-11-12T15:29:58.4703505Z         name                = "waf-default-appgw-nl-myte1-acc-euw-aks-001"
+2026-11-12T15:29:58.4703954Z       [33m~[0m[0m tags                = {
+2026-11-12T15:29:58.4704275Z             "ApplicationName"      = "MyTenneT"
+2026-11-12T15:29:58.4704619Z             "ApproverContact"      = "coos.walinga@tennet.eu"
+2026-11-12T15:29:58.4704960Z             "BusinessContact"      = "carry.block@tennet.eu"
+2026-11-12T15:29:58.4705395Z           [33m~[0m[0m "BusinessLevel"        = "non-critical" [33m->[0m[0m "Non-critical"
+2026-11-12T15:29:58.4705750Z             "BusinessUnit"         = "BTO-SM-CA"
+2026-11-12T15:29:58.4706111Z             "CMDB-ID"              = "BA00098"
+2026-11-12T15:29:58.4706421Z             "CostCentre"           = "I-1000110-13-07-01"
+2026-11-12T15:29:58.4706758Z             "CreatedBy"            = "terraform"
+2026-11-12T15:29:58.4707083Z             "DataClassification"   = "C3 I3 A3"
+2026-11-12T15:29:58.4707399Z             "DateCreated"          = "01-08-2025"
+2026-11-12T15:29:58.4707730Z             "DisasterRecovery"     = "false"
+2026-11-12T15:29:58.4708044Z             "Environment"          = "Acceptance"
+2026-11-12T15:29:58.4708387Z             "IaaSUpdateSchedule"   = "1month3wednesday"
+2026-11-12T15:29:58.4708717Z             "OperationsCommitment" = "MCP_RUN"
+2026-11-12T15:29:58.4709073Z             "OperationsContact"    = "team.thechallengers@tennet.eu"
+2026-11-12T15:29:58.4709410Z             "OrgCode"              = "Ten"
+2026-11-12T15:29:58.4709741Z             "Owner"                = "emma.van.der.veen@tennet.eu"
+2026-11-12T15:29:58.4710159Z           [31m-[0m[0m "OwnerEmail"           = "emma.van.der.veen@tennet.eu" [90m-> null[0m[0m
+2026-11-12T15:29:58.4710529Z             "RegionName"           = "Netherlands"
+2026-11-12T15:29:58.4710852Z             "ServiceClass"         = "Bronze"
+2026-11-12T15:29:58.4711228Z             "ServiceType"          = "CPS.MSA.24004.001"
+2026-11-12T15:29:58.4711562Z             "SolutionGroup"        = "CAP MCP"
+2026-11-12T15:29:58.4711878Z             "UnitCode"             = "CPS.MSA.24003.001"
+2026-11-12T15:29:58.4712215Z             "Workload"             = "MyTenneT-acc1"
+2026-11-12T15:29:58.4712639Z             "module"               = "azure-kubernetes-service"
+2026-11-12T15:29:58.4712954Z         }
+2026-11-12T15:29:58.4713305Z         [90m# (4 unchanged attributes hidden)[0m[0m
+2026-11-12T15:29:58.4713466Z 
+2026-11-12T15:29:58.4713795Z       [33m~[0m[0m policy_settings {
+2026-11-12T15:29:58.4714220Z           [33m~[0m[0m request_body_enforcement                  = true [33m->[0m[0m false
+2026-11-12T15:29:58.4714633Z             [90m# (8 unchanged attributes hidden)[0m[0m
+2026-11-12T15:29:58.4714937Z         }
+2026-11-12T15:29:58.4715059Z 
+2026-11-12T15:29:58.4715394Z         [90m# (1 unchanged block hidden)[0m[0m
+2026-11-12T15:29:58.4715701Z     }
+2026-11-12T15:29:58.4715810Z 
+2026-11-12T15:29:58.4716237Z [1m  # module.aks.module.backup[0].data.azurerm_client_config.current[0m will be read during apply
+2026-11-12T15:29:58.4716638Z   # (depends on a resource or a module with changes pending)
+2026-11-12T15:29:58.4717090Z [0m [36m<=[0m[0m data "azurerm_client_config" "current" {
+2026-11-12T15:29:58.4717470Z       [32m+[0m[0m client_id       = (known after apply)
+2026-11-12T15:29:58.4717858Z       [32m+[0m[0m id              = (known after apply)
+2026-11-12T15:29:58.4718247Z       [32m+[0m[0m object_id       = (known after apply)
+2026-11-12T15:29:58.4718683Z       [32m+[0m[0m subscription_id = (known after apply)
+2026-11-12T15:29:58.4719082Z       [32m+[0m[0m tenant_id       = (known after apply)
+2026-11-12T15:29:58.4719378Z     }
+2026-11-12T15:29:58.4719502Z 
+2026-11-12T15:29:58.4719931Z [1m  # module.aks.module.backup[0].azurerm_data_protection_backup_vault.bkp_backup_vault[0m will be updated in-place
+2026-11-12T15:29:58.4720453Z [0m  [33m~[0m[0m resource "azurerm_data_protection_backup_vault" "bkp_backup_vault" {
+2026-11-12T15:29:58.4720997Z         id                           = "/subscriptions/***/resourceGroups/rg-nl-myte1-acc-euw-aks-001/providers/Microsoft.DataProtection/backupVaults/bvault-nl-myte1-acc-euw-aks-001"
+2026-11-12T15:29:58.4721502Z         name                         = "bvault-nl-myte1-acc-euw-aks-001"
+2026-11-12T15:29:58.4721886Z       [33m~[0m[0m tags                         = {
+2026-11-12T15:29:58.4722200Z             "ApplicationName"      = "MyTenneT"
+2026-11-12T15:29:58.4722653Z             "ApproverContact"      = "coos.walinga@tennet.eu"
+2026-11-12T15:29:58.4723041Z             "BusinessContact"      = "carry.block@tennet.eu"
+2026-11-12T15:29:58.4723463Z           [33m~[0m[0m "BusinessLevel"        = "non-critical" [33m->[0m[0m "Non-critical"
+2026-11-12T15:29:58.4723832Z             "BusinessUnit"         = "BTO-SM-CA"
+2026-11-12T15:29:58.4724145Z             "CMDB-ID"              = "BA00098"
+2026-11-12T15:29:58.4724474Z             "CostCentre"           = "I-1000110-13-07-01"
+2026-11-12T15:29:58.4724793Z             "CreatedBy"            = "terraform"
+2026-11-12T15:29:58.4725125Z             "DataClassification"   = "C3 I3 A3"
+2026-11-12T15:29:58.4725557Z             "DateCreated"          = "01-08-2025"
+2026-11-12T15:29:58.4725866Z             "DisasterRecovery"     = "false"
+2026-11-12T15:29:58.4726326Z             "Environment"          = "Acceptance"
+2026-11-12T15:29:58.4726671Z             "IaaSUpdateSchedule"   = "1month3wednesday"
+2026-11-12T15:29:58.4727100Z           [33m~[0m[0m "OperationsCommitment" = "MCP_STACK" [33m->[0m[0m "MCP_RUN"
+2026-11-12T15:29:58.4727468Z             "OperationsContact"    = "team.thechallengers@tennet.eu"
+2026-11-12T15:29:58.4727882Z           [33m~[0m[0m "OrgCode"              = "ten" [33m->[0m[0m "Ten"
+2026-11-12T15:29:58.4728218Z             "Owner"                = "emma.van.der.veen@tennet.eu"
+2026-11-12T15:29:58.4728656Z           [31m-[0m[0m "OwnerEmail"           = "emma.van.der.veen@tennet.eu" [90m-> null[0m[0m
+2026-11-12T15:29:58.4729043Z             "RegionName"           = "Netherlands"
+2026-11-12T15:29:58.4729372Z             "ServiceClass"         = "Bronze"
+2026-11-12T15:29:58.4729709Z             "ServiceType"          = "CPS.MSA.24004.001"
+2026-11-12T15:29:58.4730027Z             "SolutionGroup"        = "CAP MCP"
+2026-11-12T15:29:58.4730356Z             "UnitCode"             = "CPS.MSA.24003.001"
+2026-11-12T15:29:58.4730675Z             "Workload"             = "MyTenneT-acc1"
+2026-11-12T15:29:58.4731018Z             "module"               = "azure-kubernetes-service"
+2026-11-12T15:29:58.4731315Z         }
+2026-11-12T15:29:58.4731672Z         [90m# (8 unchanged attributes hidden)[0m[0m
+2026-11-12T15:29:58.4731816Z 
+2026-11-12T15:29:58.4732166Z         [90m# (1 unchanged block hidden)[0m[0m
+2026-11-12T15:29:58.4732559Z     }
+2026-11-12T15:29:58.4732682Z 
+2026-11-12T15:29:58.4733115Z [1m  # module.aks.module.backup[0].azurerm_kubernetes_cluster_extension.bkp_extension[0m will be updated in-place
+2026-11-12T15:29:58.4733625Z [0m  [33m~[0m[0m resource "azurerm_kubernetes_cluster_extension" "bkp_extension" {
+2026-11-12T15:29:58.4734047Z       [33m~[0m[0m configuration_settings           = {
+2026-11-12T15:29:58.4734525Z           [31m-[0m[0m "configuration.backupStorageLocation.bucket"                   = "backup-container"
+2026-11-12T15:29:58.4735033Z           [31m-[0m[0m "configuration.backupStorageLocation.config.resourceGroup"     = "rg-nl-myte1-acc-euw-aks-001"
+2026-11-12T15:29:58.4735611Z           [31m-[0m[0m "configuration.backupStorageLocation.config.storageAccount"    = "stnlmyte1accuwaks001"
+2026-11-12T15:29:58.4736177Z           [31m-[0m[0m "configuration.backupStorageLocation.config.storageAccountURI" = "https://stnlmyte1accuwaks001.blob.core.windows.net/"
+2026-11-12T15:29:58.4736769Z           [31m-[0m[0m "configuration.backupStorageLocation.config.subscriptionId"    = "***"
+2026-11-12T15:29:58.4737233Z           [31m-[0m[0m "configuration.backupStorageLocation.config.useAAD"            = "true"
+2026-11-12T15:29:58.4737737Z           [31m-[0m[0m "credentials.subscriptionId"                                   = "***"
+2026-11-12T15:29:58.4738272Z           [31m-[0m[0m "credentials.tenantId"                                         = "***"
+2026-11-12T15:29:58.4738610Z         } -> (known after apply)
+2026-11-12T15:29:58.4739161Z         id                               = "/subscriptions/***/resourceGroups/rg-nl-myte1-acc-euw-aks-001/providers/Microsoft.ContainerService/managedClusters/aks-nl-myte1-acc-euw-aks-001/providers/Microsoft.KubernetesConfiguration/extensions/bkp-extension-nl-myte1-acc-euw-aks"
+2026-11-12T15:29:58.4739707Z         name                             = "bkp-extension-nl-myte1-acc-euw-aks"
+2026-11-12T15:29:58.4740198Z         [90m# (9 unchanged attributes hidden)[0m[0m
+2026-11-12T15:29:58.4740472Z     }
+2026-11-12T15:29:58.4740588Z 
+2026-11-12T15:29:58.4741010Z [1m  # module.aks.module.backup[0].azurerm_monitor_action_group.bkp_ag_alerts[0m will be updated in-place
+2026-11-12T15:29:58.4741460Z [0m  [33m~[0m[0m resource "azurerm_monitor_action_group" "bkp_ag_alerts" {
+2026-11-12T15:29:58.4742119Z         id                  = "/subscriptions/***/resourceGroups/rg-nl-myte1-acc-euw-aks-001/providers/Microsoft.Insights/actionGroups/ag-bkp-nl-myte1-acc-euw-aks"
+2026-11-12T15:29:58.4742790Z         name                = "ag-bkp-nl-myte1-acc-euw-aks"
+2026-11-12T15:29:58.4743357Z       [33m~[0m[0m tags                = {
+2026-11-12T15:29:58.4743672Z             "ApplicationName"      = "MyTenneT"
+2026-11-12T15:29:58.4744014Z             "ApproverContact"      = "coos.walinga@tennet.eu"
+2026-11-12T15:29:58.4744366Z             "BusinessContact"      = "carry.block@tennet.eu"
+2026-11-12T15:29:58.4744783Z           [33m~[0m[0m "BusinessLevel"        = "non-critical" [33m->[0m[0m "Non-critical"
+2026-11-12T15:29:58.4745147Z             "BusinessUnit"         = "BTO-SM-CA"
+2026-11-12T15:29:58.4745453Z             "CMDB-ID"              = "BA00098"
+2026-11-12T15:29:58.4745783Z             "CostCentre"           = "I-1000110-13-07-01"
+2026-11-12T15:29:58.4746101Z             "CreatedBy"            = "terraform"
+2026-11-12T15:29:58.4746431Z             "DataClassification"   = "C3 I3 A3"
+2026-11-12T15:29:58.4746746Z             "DateCreated"          = "01-08-2025"
+2026-11-12T15:29:58.4747106Z             "DisasterRecovery"     = "false"
+2026-11-12T15:29:58.4747527Z             "Environment"          = "Acceptance"
+2026-11-12T15:29:58.4747864Z             "IaaSUpdateSchedule"   = "1month3wednesday"
+2026-11-12T15:29:58.4748291Z           [33m~[0m[0m "OperationsCommitment" = "MCP_STACK" [33m->[0m[0m "MCP_RUN"
+2026-11-12T15:29:58.4748661Z             "OperationsContact"    = "team.thechallengers@tennet.eu"
+2026-11-12T15:29:58.4749073Z           [33m~[0m[0m "OrgCode"              = "ten" [33m->[0m[0m "Ten"
+2026-11-12T15:29:58.4749408Z             "Owner"                = "emma.van.der.veen@tennet.eu"
+2026-11-12T15:29:58.4749844Z           [31m-[0m[0m "OwnerEmail"           = "emma.van.der.veen@tennet.eu" [90m-> null[0m[0m
+2026-11-12T15:29:58.4750193Z             "RegionName"           = "Netherlands"
+2026-11-12T15:29:58.4750518Z             "ServiceClass"         = "Bronze"
+2026-11-12T15:29:58.4750834Z             "ServiceType"          = "CPS.MSA.24004.001"
+2026-11-12T15:29:58.4751167Z             "SolutionGroup"        = "CAP MCP"
+2026-11-12T15:29:58.4751502Z             "UnitCode"             = "CPS.MSA.24003.001"
+2026-11-12T15:29:58.4751875Z             "Workload"             = "MyTenneT-acc1"
+2026-11-12T15:29:58.4752214Z             "module"               = "azure-kubernetes-service"
+2026-11-12T15:29:58.4752654Z         }
+2026-11-12T15:29:58.4753016Z         [90m# (4 unchanged attributes hidden)[0m[0m
+2026-11-12T15:29:58.4753319Z     }
+2026-11-12T15:29:58.4753446Z 
+2026-11-12T15:29:58.4753873Z [1m  # module.aks.module.backup[0].azurerm_monitor_metric_alert.bkp_backup_alert[0m will be updated in-place
+2026-11-12T15:29:58.4754372Z [0m  [33m~[0m[0m resource "azurerm_monitor_metric_alert" "bkp_backup_alert" {
+2026-11-12T15:29:58.4754878Z         id                       = "/subscriptions/***/resourceGroups/rg-nl-myte1-acc-euw-aks-001/providers/Microsoft.Insights/metricAlerts/backup-alert"
+2026-11-12T15:29:58.4755350Z         name                     = "backup-alert"
+2026-11-12T15:29:58.4755714Z       [33m~[0m[0m tags                     = {
+2026-11-12T15:29:58.4756022Z             "ApplicationName"      = "MyTenneT"
+2026-11-12T15:29:58.4756376Z             "ApproverContact"      = "coos.walinga@tennet.eu"
+2026-11-12T15:29:58.4756736Z             "BusinessContact"      = "carry.block@tennet.eu"
+2026-11-12T15:29:58.4757155Z           [33m~[0m[0m "BusinessLevel"        = "non-critical" [33m->[0m[0m "Non-critical"
+2026-11-12T15:29:58.4757517Z             "BusinessUnit"         = "BTO-SM-CA"
+2026-11-12T15:29:58.4757824Z             "CMDB-ID"              = "BA00098"
+2026-11-12T15:29:58.4758151Z             "CostCentre"           = "I-1000110-13-07-01"
+2026-11-12T15:29:58.4758500Z             "CreatedBy"            = "terraform"
+2026-11-12T15:29:58.4758826Z             "DataClassification"   = "C3 I3 A3"
+2026-11-12T15:29:58.4759143Z             "DateCreated"          = "01-08-2025"
+2026-11-12T15:29:58.4759466Z             "DisasterRecovery"     = "false"
+2026-11-12T15:29:58.4759775Z             "Environment"          = "Acceptance"
+2026-11-12T15:29:58.4760112Z             "IaaSUpdateSchedule"   = "1month3wednesday"
+2026-11-12T15:29:58.4760542Z           [33m~[0m[0m "OperationsCommitment" = "MCP_STACK" [33m->[0m[0m "MCP_RUN"
+2026-11-12T15:29:58.4760913Z             "OperationsContact"    = "team.thechallengers@tennet.eu"
+2026-11-12T15:29:58.4761326Z           [33m~[0m[0m "OrgCode"              = "ten" [33m->[0m[0m "Ten"
+2026-11-12T15:29:58.4761662Z             "Owner"                = "emma.van.der.veen@tennet.eu"
+2026-11-12T15:29:58.4762095Z           [31m-[0m[0m "OwnerEmail"           = "emma.van.der.veen@tennet.eu" [90m-> null[0m[0m
+2026-11-12T15:29:58.4762544Z             "RegionName"           = "Netherlands"
+2026-11-12T15:29:58.4762868Z             "ServiceClass"         = "Bronze"
+2026-11-12T15:29:58.4763188Z             "ServiceType"          = "CPS.MSA.24004.001"
+2026-11-12T15:29:58.4763519Z             "SolutionGroup"        = "CAP MCP"
+2026-11-12T15:29:58.4763855Z             "UnitCode"             = "CPS.MSA.24003.001"
+2026-11-12T15:29:58.4764239Z             "Workload"             = "MyTenneT-acc1"
+2026-11-12T15:29:58.4764580Z             "module"               = "azure-kubernetes-service"
+2026-11-12T15:29:58.4764880Z         }
+2026-11-12T15:29:58.4765243Z         [90m# (10 unchanged attributes hidden)[0m[0m
+2026-11-12T15:29:58.4765390Z 
+2026-11-12T15:29:58.4765744Z         [90m# (2 unchanged blocks hidden)[0m[0m
+2026-11-12T15:29:58.4766039Z     }
+2026-11-12T15:29:58.4766164Z 
+2026-11-12T15:29:58.4766593Z [1m  # module.aks.module.backup[0].azurerm_monitor_metric_alert.bkp_restore_alert[0m will be updated in-place
+2026-11-12T15:29:58.4767089Z [0m  [33m~[0m[0m resource "azurerm_monitor_metric_alert" "bkp_restore_alert" {
+2026-11-12T15:29:58.4767596Z         id                       = "/subscriptions/***/resourceGroups/rg-nl-myte1-acc-euw-aks-001/providers/Microsoft.Insights/metricAlerts/restore-alert"
+2026-11-12T15:29:58.4767999Z         name                     = "restore-alert"
+2026-11-12T15:29:58.4768353Z       [33m~[0m[0m tags                     = {
+2026-11-12T15:29:58.4768674Z             "ApplicationName"      = "MyTenneT"
+2026-11-12T15:29:58.4769063Z             "ApproverContact"      = "coos.walinga@tennet.eu"
+2026-11-12T15:29:58.4769525Z           [33m~[0m[0m "BusinessContact"      = "carry.block@tennet.eu " [33m->[0m[0m "carry.block@tennet.eu"
+2026-11-12T15:29:58.4770019Z           [33m~[0m[0m "BusinessLevel"        = "non-critical" [33m->[0m[0m "Non-critical"
+2026-11-12T15:29:58.4770379Z             "BusinessUnit"         = "BTO-SM-CA"
+2026-11-12T15:29:58.4770685Z             "CMDB-ID"              = "BA00098"
+2026-11-12T15:29:58.4771010Z             "CostCentre"           = "I-1000110-13-07-01"
+2026-11-12T15:29:58.4771336Z             "CreatedBy"            = "terraform"
+2026-11-12T15:29:58.4771719Z             "DataClassification"   = "C3 I3 A3"
+2026-11-12T15:29:58.4772051Z             "DateCreated"          = "01-08-2025"
+2026-11-12T15:29:58.4772455Z             "DisasterRecovery"     = "false"
+2026-11-12T15:29:58.4772783Z             "Environment"          = "Acceptance"
+2026-11-12T15:29:58.4773110Z             "IaaSUpdateSchedule"   = "1month3wednesday"
+2026-11-12T15:29:58.4773540Z           [33m~[0m[0m "OperationsCommitment" = "MCP_STACK" [33m->[0m[0m "MCP_RUN"
+2026-11-12T15:29:58.4773907Z             "OperationsContact"    = "team.thechallengers@tennet.eu"
+2026-11-12T15:29:58.4774326Z           [33m~[0m[0m "OrgCode"              = "ten" [33m->[0m[0m "Ten"
+2026-11-12T15:29:58.4774660Z             "Owner"                = "emma.van.der.veen@tennet.eu"
+2026-11-12T15:29:58.4775098Z           [31m-[0m[0m "OwnerEmail"           = "emma.van.der.veen@tennet.eu" [90m-> null[0m[0m
+2026-11-12T15:29:58.4775503Z             "RegionName"           = "Netherlands"
+2026-11-12T15:29:58.4775815Z             "ServiceClass"         = "Bronze"
+2026-11-12T15:29:58.4776144Z             "ServiceType"          = "CPS.MSA.24004.001"
+2026-11-12T15:29:58.4776464Z             "SolutionGroup"        = "CAP MCP"
+2026-11-12T15:29:58.4776795Z             "UnitCode"             = "CPS.MSA.24003.001"
+2026-11-12T15:29:58.4777112Z             "Workload"             = "MyTenneT-acc1"
+2026-11-12T15:29:58.4777448Z             "module"               = "azure-kubernetes-service"
+2026-11-12T15:29:58.4777750Z         }
+2026-11-12T15:29:58.4778113Z         [90m# (10 unchanged attributes hidden)[0m[0m
+2026-11-12T15:29:58.4778256Z 
+2026-11-12T15:29:58.4778606Z         [90m# (2 unchanged blocks hidden)[0m[0m
+2026-11-12T15:29:58.4778913Z     }
+2026-11-12T15:29:58.4779060Z 
+2026-11-12T15:29:58.4779575Z [1m # module.aks.module.backup[0].azurerm_private_endpoint.bkp_private_endpoint[0m will no longer be managed by Terraform, but [1m[31mwill not be destroyed[0m
+2026-11-12T15:29:58.4780021Z  # (destroy = false is set in the configuration)
+2026-11-12T15:29:58.4780455Z [0m [31m.[0m[0m resource "azurerm_private_endpoint" "bkp_private_endpoint" {
+2026-11-12T15:29:58.4780989Z         id                            = "/subscriptions/***/resourceGroups/rg-nl-myte1-acc-euw-aks-001/providers/Microsoft.Network/privateEndpoints/pep-nl-myte1-acc-euw-aks-001"
+2026-11-12T15:29:58.4781464Z         name                          = "pep-nl-myte1-acc-euw-aks-001"
+2026-11-12T15:29:58.4781792Z         tags                          = {
+2026-11-12T15:29:58.4782094Z             "ApplicationName"      = "MyTenneT"
+2026-11-12T15:29:58.4782535Z             "ApproverContact"      = "coos.walinga@tennet.eu"
+2026-11-12T15:29:58.4782877Z             "BusinessContact"      = "nick.spierings@tennet.eu"
+2026-11-12T15:29:58.4783230Z             "BusinessLevel"        = "non-critical"
+2026-11-12T15:29:58.4783560Z             "BusinessUnit"         = "BTO-SM-CA"
+2026-11-12T15:29:58.4783880Z             "CMDB-ID"              = "APP0495"
+2026-11-12T15:29:58.4784219Z             "CostCentre"           = "I-1000110-13-07-01"
+2026-11-12T15:29:58.4784534Z             "CreatedBy"            = "terraform"
+2026-11-12T15:29:58.4784867Z             "DataClassification"   = "C3 I3 A3"
+2026-11-12T15:29:58.4785181Z             "DateCreated"          = "01-08-2025"
+2026-11-12T15:29:58.4785572Z             "DisasterRecovery"     = "false"
+2026-11-12T15:29:58.4785884Z             "Environment"          = "Acceptance"
+2026-11-12T15:29:58.4786223Z             "IaaSUpdateSchedule"   = "1month3wednesday"
+2026-11-12T15:29:58.4786584Z             "OperationsCommitment" = "MCP_STACK"
+2026-11-12T15:29:58.4786947Z             "OperationsContact"    = "team.thechallengers@tennet.eu"
+2026-11-12T15:29:58.4787293Z             "OrgCode"              = "ten"
+2026-11-12T15:29:58.4787606Z             "Owner"                = "emma.van.der.veen@tennet.eu"
+2026-11-12T15:29:58.4788000Z             "OwnerEmail"           = "coos.walinga@tennet.eu,nick.spierings@tennet.eu,emma.van.der.veen@tennet.eu"
+2026-11-12T15:29:58.4788465Z             "RegionName"           = "Netherlands"
+2026-11-12T15:29:58.4788789Z             "ServiceClass"         = "Bronze"
+2026-11-12T15:29:58.4789107Z             "ServiceType"          = "CPS.MSA.24004.001"
+2026-11-12T15:29:58.4789442Z             "SolutionGroup"        = "CAP MCP"
+2026-11-12T15:29:58.4789760Z             "UnitCode"             = "CPS.MSA.24003.001"
+2026-11-12T15:29:58.4790172Z             "Workload"             = "MyTenneT-acc1"
+2026-11-12T15:29:58.4790497Z             "module"               = "azure-kubernetes-service"
+2026-11-12T15:29:58.4790810Z         }
+2026-11-12T15:29:58.4791184Z         [90m# (7 unchanged attributes hidden)[0m[0m
+2026-11-12T15:29:58.4791328Z 
+2026-11-12T15:29:58.4791683Z         [90m# (2 unchanged blocks hidden)[0m[0m
+2026-11-12T15:29:58.4792012Z     }
+2026-11-12T15:29:58.4792138Z 
+2026-11-12T15:29:58.4792675Z [1m  # module.aks.module.backup[0].azurerm_role_assignment.bkp_role_assignments["ara3"][0m must be [1m[31mreplaced[0m
+2026-11-12T15:29:58.4793184Z [0m[31m-[0m/[32m+[0m[0m resource "azurerm_role_assignment" "bkp_role_assignments" {
+2026-11-12T15:29:58.4793623Z       [32m+[0m[0m condition_version                      = (known after apply)
+2026-11-12T15:29:58.4794318Z       [33m~[0m[0m id                                     = "/subscriptions/***/resourceGroups/rg-nl-myte1-acc-euw-aks-001/providers/Microsoft.Authorization/roleAssignments/032d0872-fe9c-3ba2-e31b-f427200bcaf1" -> (known after apply)
+2026-11-12T15:29:58.4794922Z       [33m~[0m[0m name                                   = "032d0872-fe9c-3ba2-e31b-f427200bcaf1" -> (known after apply)
+2026-11-12T15:29:58.4795504Z       [33m~[0m[0m principal_id                           = "b5def150-3244-4cc3-82f6-20faa31a0439" [31m# forces replacement[0m[0m -> (known after apply) [31m# forces replacement[0m[0m
+2026-11-12T15:29:58.4796024Z       [33m~[0m[0m principal_type                         = "ServicePrincipal" -> (known after apply)
+2026-11-12T15:29:58.4796694Z       [33m~[0m[0m role_definition_id                     = "/subscriptions/***/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c" -> (known after apply)
+2026-11-12T15:29:58.4797225Z       [32m+[0m[0m skip_service_principal_aad_check       = (known after apply)
+2026-11-12T15:29:58.4797634Z         [90m# (5 unchanged attributes hidden)[0m[0m
+2026-11-12T15:29:58.4797948Z     }
+2026-11-12T15:29:58.4798070Z 
+2026-11-12T15:29:58.4798538Z [1m # module.aks.module.backup[0].azurerm_storage_account.bkp_sa[0m will no longer be managed by Terraform, but [1m[31mwill not be destroyed[0m
+2026-11-12T15:29:58.4799026Z  # (destroy = false is set in the configuration)
+2026-11-12T15:29:58.4799421Z [0m [31m.[0m[0m resource "azurerm_storage_account" "bkp_sa" {
+2026-11-12T15:29:58.4799912Z         id                                 = "/subscriptions/***/resourceGroups/rg-nl-myte1-acc-euw-aks-001/providers/Microsoft.Storage/storageAccounts/stnlmyte1accuwaks001"
+2026-11-12T15:29:58.4800346Z         name                               = "stnlmyte1accuwaks001"
+2026-11-12T15:29:58.4800647Z         tags                               = {
+2026-11-12T15:29:58.4800960Z             "ApplicationName"      = "MyTenneT"
+2026-11-12T15:29:58.4801290Z             "ApproverContact"      = "coos.walinga@tennet.eu"
+2026-11-12T15:29:58.4801704Z             "BusinessContact"      = "nick.spierings@tennet.eu"
+2026-11-12T15:29:58.4802038Z             "BusinessLevel"        = "non-critical"
+2026-11-12T15:29:58.4802465Z             "BusinessUnit"         = "BTO-SM-CA"
+2026-11-12T15:29:58.4802787Z             "CMDB-ID"              = "APP0495"
+2026-11-12T15:29:58.4803102Z             "CostCentre"           = "I-1000110-13-07-01"
+2026-11-12T15:29:58.4803435Z             "CreatedBy"            = "terraform"
+2026-11-12T15:29:58.4803744Z             "DataClassification"   = "C3 I3 A3"
+2026-11-12T15:29:58.4804076Z             "DateCreated"          = "01-08-2025"
+2026-11-12T15:29:58.4804474Z             "DisasterRecovery"     = "false"
+2026-11-12T15:29:58.4804801Z             "Environment"          = "Acceptance"
+2026-11-12T15:29:58.4805123Z             "IaaSUpdateSchedule"   = "1month3wednesday"
+2026-11-12T15:29:58.4805464Z             "OperationsCommitment" = "MCP_STACK"
+2026-11-12T15:29:58.4805808Z             "OperationsContact"    = "team.thechallengers@tennet.eu"
+2026-11-12T15:29:58.4806152Z             "OrgCode"              = "ten"
+2026-11-12T15:29:58.4806469Z             "Owner"                = "emma.van.der.veen@tennet.eu"
+2026-11-12T15:29:58.4806865Z             "OwnerEmail"           = "coos.walinga@tennet.eu,nick.spierings@tennet.eu,emma.van.der.veen@tennet.eu"
+2026-11-12T15:29:58.4807251Z             "RegionName"           = "Netherlands"
+2026-11-12T15:29:58.4807558Z             "ServiceClass"         = "Bronze"
+2026-11-12T15:29:58.4807890Z             "ServiceType"          = "CPS.MSA.24004.001"
+2026-11-12T15:29:58.4808206Z             "SolutionGroup"        = "CAP MCP"
+2026-11-12T15:29:58.4808536Z             "UnitCode"             = "CPS.MSA.24003.001"
+2026-11-12T15:29:58.4808850Z             "Workload"             = "MyTenneT-acc1"
+2026-11-12T15:29:58.4809193Z             "module"               = "azure-kubernetes-service"
+2026-11-12T15:29:58.4809518Z         }
+2026-11-12T15:29:58.4809892Z         [90m# (97 unchanged attributes hidden)[0m[0m
+2026-11-12T15:29:58.4810053Z 
+2026-11-12T15:29:58.4810390Z         [90m# (4 unchanged blocks hidden)[0m[0m
+2026-11-12T15:29:58.4810700Z     }
+2026-11-12T15:29:58.4810808Z 
+2026-11-12T15:29:58.4811300Z [1m # module.aks.module.backup[0].time_sleep.wait_for_backupinstance[0m will no longer be managed by Terraform, but [1m[31mwill not be destroyed[0m
+2026-11-12T15:29:58.4811732Z  # (destroy = false is set in the configuration)
+2026-11-12T15:29:58.4812145Z [0m [31m.[0m[0m resource "time_sleep" "wait_for_backupinstance" {
+2026-11-12T15:29:58.4812632Z         id              = "2026-01-13T16:15:09Z"
+2026-11-12T15:29:58.4813039Z         [90m# (2 unchanged attributes hidden)[0m[0m
+2026-11-12T15:29:58.4813337Z     }
+2026-11-12T15:29:58.4813460Z 
+2026-11-12T15:29:58.4813875Z [1m  # module.aks.module.backup[0].time_sleep.wait_for_rbac_propagation[0m will be created
+2026-11-12T15:29:58.4814323Z [0m  [32m+[0m[0m resource "time_sleep" "wait_for_rbac_propagation" {
+2026-11-12T15:29:58.4814738Z       [32m+[0m[0m create_duration = "180s"
+2026-11-12T15:29:58.4815105Z       [32m+[0m[0m id              = (known after apply)
+2026-11-12T15:29:58.4815413Z     }
+2026-11-12T15:29:58.4815583Z 
+2026-11-12T15:29:58.4815950Z [1mPlan:[0m 12 to add, 18 to change, 8 to destroy.
+2026-11-12T15:29:58.4816327Z [0m[33m╷[0m[0m
+2026-11-12T15:29:58.4816780Z [33m│[0m [0m[1m[33mWarning: [0m[0m[1mSome objects will no longer be managed by Terraform[0m
+2026-11-12T15:29:58.4817256Z [33m│[0m [0m
+2026-11-12T15:29:58.4817658Z [33m│[0m [0m[0mIf you apply this plan, Terraform will discard its tracking information for
+2026-11-12T15:29:58.4818088Z [33m│[0m [0mthe following objects, but it will not delete them:
+2026-11-12T15:29:58.4818489Z [33m│[0m [0m - module.aks.module.backup[0].azurerm_storage_account.bkp_sa
+2026-11-12T15:29:58.4818936Z [33m│[0m [0m - module.aks.module.backup[0].azurerm_private_endpoint.bkp_private_endpoint
+2026-11-12T15:29:58.4819430Z [33m│[0m [0m - module.aks.module.backup[0].time_sleep.wait_for_backupinstance
+2026-11-12T15:29:58.4819784Z [33m│[0m [0m
+2026-11-12T15:29:58.4820158Z [33m│[0m [0mAfter applying this plan, Terraform will no longer manage these objects.
+2026-11-12T15:29:58.4820602Z [33m│[0m [0mYou will need to import them into Terraform to manage them again.
+2026-11-12T15:29:58.4820931Z [33m╵[0m[0m
+2026-11-12T15:29:58.4821232Z [33m╷[0m[0m
+2026-11-12T15:29:58.4821590Z [33m│[0m [0m[1m[33mWarning: [0m[0m[1mArgument is deprecated[0m
+2026-11-12T15:29:58.4822123Z [33m│[0m [0m
+2026-11-12T15:29:58.4822633Z [33m│[0m [0m[0m  with module.aks.azurerm_application_gateway.appgw,
+2026-11-12T15:29:58.4823182Z [33m│[0m [0m  on .terraform/modules/aks/appgw.tf line 322, in resource "azurerm_application_gateway" "appgw":
+2026-11-12T15:29:58.4823664Z [33m│[0m [0m 322:   enable_http2 = [4mvar.appgw_enable_http2[0m[0m
+2026-11-12T15:29:58.4824013Z [33m│[0m [0m
+2026-11-12T15:29:58.4824428Z [33m│[0m [0mthe `enable_http2` property has been deprecated in favour of the
+2026-11-12T15:29:58.4824875Z [33m│[0m [0m`http2_enabled` property and will be removed in v5.0 of the AzureRM
+2026-11-12T15:29:58.4825265Z [33m│[0m [0mProvider
+2026-11-12T15:29:58.4825580Z [33m╵[0m[0m
+2026-11-12T15:29:58.4825888Z [90m
+2026-11-12T15:29:58.4826277Z ─────────────────────────────────────────────────────────────────────────────[0m
+2026-11-12T15:29:58.4826441Z 
+2026-11-12T15:29:58.4826787Z Note: You didn't use the -out option to save this plan, so Terraform can't
+2026-11-12T15:29:58.4827176Z guarantee to take exactly these actions if you run "terraform apply" now.
+2026-11-12T15:29:58.4827370Z 
+2026-11-12T15:29:58.4829117Z ##[debug]Exit code 2 received from tool '/opt/hostedtoolcache/terraform/1.9.5/x64/terraform'
+2026-11-12T15:29:58.4829973Z ##[debug]STDIO streams have closed for tool '/opt/hostedtoolcache/terraform/1.9.5/x64/terraform'
+2026-11-12T15:29:58.4830753Z ##[debug]set changesPresent=true
+2026-11-12T15:29:58.4832992Z ##[debug]Processed: ##vso[task.setvariable variable=changesPresent;isOutput=true;issecret=false;]true
+2026-11-12T15:29:58.4833817Z ##[debug]task result: Succeeded
+2026-11-12T15:29:58.4835226Z ##[debug]Processed: ##vso[task.complete result=Succeeded;]
+2026-11-12T15:29:58.4839397Z ##[section]Finishing: Terraform: plan
