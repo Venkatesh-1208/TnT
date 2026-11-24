@@ -1,5 +1,6 @@
 az login
 az account set --subscription "decf6cfd-6404-41b2-b791-9df7b7ee7904"
+$prd subscrption = "c26a9fa0-7b2f-4ead-961a-48bffb6a60da"
 
 $sub     = "decf6cfd-6404-41b2-b791-9df7b7ee7904"
 $shdRg   = "rg-nl-cf-settl-shd-euw-yjjlh-001"
