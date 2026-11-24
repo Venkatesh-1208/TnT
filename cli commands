@@ -1,25 +1,31 @@
 az login
-az account set --subscription "decf6cfd-6404-41b2-b791-9df7b7ee7904"
-$prd subscrption = "c26a9fa0-7b2f-4ead-961a-48bffb6a60da"
 
-$sub     = "decf6cfd-6404-41b2-b791-9df7b7ee7904"
+# Subscriptions
+$shdSub = "decf6cfd-6404-41b2-b791-9df7b7ee7904"
+$prdSub = "c26a9fa0-7b2f-4ead-961a-48bffb6a60da"
+
+# Shared (hub)
 $shdRg   = "rg-nl-cf-settl-shd-euw-yjjlh-001"
 $shdVnet = "vnet-nl-cf-settl-shd-euw-yjjlh-001"
+
+# Production
 $prdRg   = "rg-nl-cf-settl-prd-euw-yjjlh-001"
 $prdVnet = "vnet-nl-cf-settl-prd-euw-yjjlh-001"
 
-# 1) shd -> prd
+# 1) shd -> prd (created in the shared subscription)
 az network vnet peering create `
+  --subscription $shdSub `
   --name peer-to-appgw-prd `
   --resource-group $shdRg `
   --vnet-name $shdVnet `
-  --remote-vnet "/subscriptions/$sub/resourceGroups/$prdRg/providers/Microsoft.Network/virtualNetworks/$prdVnet" `
+  --remote-vnet "/subscriptions/$prdSub/resourceGroups/$prdRg/providers/Microsoft.Network/virtualNetworks/$prdVnet" `
   --allow-vnet-access
 
-# 2) prd -> shd
+# 2) prd -> shd (created in the production subscription)
 az network vnet peering create `
+  --subscription $prdSub `
   --name peer-to-hub `
   --resource-group $prdRg `
   --vnet-name $prdVnet `
-  --remote-vnet "/subscriptions/$sub/resourceGroups/$shdRg/providers/Microsoft.Network/virtualNetworks/$shdVnet" `
+  --remote-vnet "/subscriptions/$shdSub/resourceGroups/$shdRg/providers/Microsoft.Network/virtualNetworks/$shdVnet" `
   --allow-vnet-access
