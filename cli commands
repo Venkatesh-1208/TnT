@@ -1,0 +1,24 @@
+az login
+az account set --subscription "decf6cfd-6404-41b2-b791-9df7b7ee7904"
+
+$sub     = "decf6cfd-6404-41b2-b791-9df7b7ee7904"
+$shdRg   = "rg-nl-cf-settl-shd-euw-yjjlh-001"
+$shdVnet = "vnet-nl-cf-settl-shd-euw-yjjlh-001"
+$prdRg   = "rg-nl-cf-settl-prd-euw-yjjlh-001"
+$prdVnet = "vnet-nl-cf-settl-prd-euw-yjjlh-001"
+
+# 1) shd -> prd
+az network vnet peering create `
+  --name peer-to-appgw-prd `
+  --resource-group $shdRg `
+  --vnet-name $shdVnet `
+  --remote-vnet "/subscriptions/$sub/resourceGroups/$prdRg/providers/Microsoft.Network/virtualNetworks/$prdVnet" `
+  --allow-vnet-access
+
+# 2) prd -> shd
+az network vnet peering create `
+  --name peer-to-hub `
+  --resource-group $prdRg `
+  --vnet-name $prdVnet `
+  --remote-vnet "/subscriptions/$sub/resourceGroups/$shdRg/providers/Microsoft.Network/virtualNetworks/$shdVnet" `
+  --allow-vnet-access
