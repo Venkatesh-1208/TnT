@@ -1,0 +1,9 @@
+  - name: inbound-allow-jump-traffic-to-application-gateway
+    priority: 203
+    direction: "Inbound"
+    access: "Allow"
+    protocol: "Tcp"
+    source_port_range: "*"
+    destination_port_range: "443"
+    source_address_prefix: "10.91.240.0/27"
+    destination_address_prefix: "10.91.61.0/24"
